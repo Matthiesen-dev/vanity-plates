@@ -24,13 +24,7 @@ import net.minecraft.world.item.Items;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlateMenu {
-    public final ServerPlayer player;
-
-    public PlateMenu(ServerPlayer player) {
-        this.player = player;
-    }
-
+public record PlateMenu(ServerPlayer player) {
     public Component getDisplayTitle() {
         return Component.literal("Vanity Plates")
                 .withStyle(style ->

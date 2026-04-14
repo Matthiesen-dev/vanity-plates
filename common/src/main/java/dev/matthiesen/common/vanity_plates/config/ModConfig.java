@@ -8,14 +8,6 @@ import dev.matthiesen.common.vanity_plates.Constants;
 import java.util.List;
 
 public class ModConfig {
-    @SerializedName("permissionlevels")
-    public PermissionLevels permissionLevels = new PermissionLevels();
-
-    public static class PermissionLevels {
-        @SerializedName("command.example")
-        public int COMMAND_EXAMPLE_PERMISSION_LEVEL = 4;
-    }
-
     @SerializedName("prefixPriority")
     public int prefixPriority = 1000;
 

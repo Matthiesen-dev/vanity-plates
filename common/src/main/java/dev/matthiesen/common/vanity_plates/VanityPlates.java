@@ -17,6 +17,11 @@ public class VanityPlates {
         config = new ConfigManager().loadConfig();
     }
 
+    public static void reload() {
+        config = new ConfigManager().loadConfig();
+        Constants.createInfoLog("Reloaded Config");
+    }
+
     public static void onStartup(MinecraftServer server) {
         Constants.createInfoLog("Server starting, Setting up");
     }

@@ -10,6 +10,7 @@ import java.util.List;
 
 public class CommandRegistry {
     public static final List<ICommand> COMMANDS = List.of(
+            new VanityCommand()
     );
 
     public static void init(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext registry, Commands.CommandSelection context) {
