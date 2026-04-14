@@ -4,8 +4,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import dev.matthiesen.common.vanity_plates.commands.CommandRegistry;
 import dev.matthiesen.common.vanity_plates.config.ConfigManager;
 import dev.matthiesen.common.vanity_plates.config.ModConfig;
-import net.luckperms.api.LuckPerms;
-import net.luckperms.api.LuckPermsProvider;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
