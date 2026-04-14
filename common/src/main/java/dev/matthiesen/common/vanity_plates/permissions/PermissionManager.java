@@ -11,6 +11,7 @@ import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.PrefixNode;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 public class PermissionManager {
@@ -58,6 +59,13 @@ public class PermissionManager {
         User user = getLPUser(player);
         if (user == null) return null;
         return user.getCachedData().getMetaData();
+    }
+
+    public static boolean comparePrefix(ServerPlayer player, String prefix) {
+        User user = getLPUser(player);
+        if (user == null) return false;
+        String currentPrefix = user.getCachedData().getMetaData().getPrefix();
+        return Objects.equals(currentPrefix, prefix);
     }
 
     public static void setUserPrefix(ServerPlayer player, String newPrefix) {

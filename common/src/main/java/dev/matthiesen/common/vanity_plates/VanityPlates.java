@@ -11,7 +11,6 @@ import net.minecraft.server.MinecraftServer;
 
 public class VanityPlates {
     public static ModConfig config;
-    public static MinecraftServer currentServer;
 
     public static void initialize() {
         Constants.createInfoLog("Initialized");
@@ -20,7 +19,6 @@ public class VanityPlates {
 
     public static void onStartup(MinecraftServer server) {
         Constants.createInfoLog("Server starting, Setting up");
-        currentServer = server;
     }
 
     public static void onShutdown() {
