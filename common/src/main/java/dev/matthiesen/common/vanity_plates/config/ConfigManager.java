@@ -45,7 +45,7 @@ public class ConfigManager implements IConfigManager {
                         fileConfigElement.getAsJsonObject()
                 );
 
-                // Deserialize the merged JsonElement back to PokemonToItemConfig
+                // Deserialize the merged JsonElement back to ModConfig
                 ModConfig finalConfig;
                 finalConfig = ModConfig.GSON.fromJson(
                         mergedConfigElement,

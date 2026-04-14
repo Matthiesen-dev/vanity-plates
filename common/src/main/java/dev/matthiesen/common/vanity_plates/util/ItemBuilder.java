@@ -20,10 +20,6 @@ public class ItemBuilder {
         this.stack = new ItemStack(item);
     }
 
-    public ItemBuilder(ItemStack item) {
-        this.stack = item;
-    }
-
     public ItemBuilder addLore(Component[] newLore) {
         ItemLore itemLore = stack.get(DataComponents.LORE);
         if (itemLore == null) {

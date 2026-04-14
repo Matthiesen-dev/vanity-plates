@@ -19,11 +19,10 @@ import net.minecraft.world.item.Items;
 import java.util.Optional;
 
 public class UiItem {
-    public static String rawDisplayItem;
-    public static String requiredPermission;
-
-    public static String label;
-    public static String prefix;
+    public String rawDisplayItem;
+    public String requiredPermission;
+    public String label;
+    public String prefix;
 
     public UiItem(ModConfig.PlateEntry entry) {
         rawDisplayItem = entry.displayItem;
@@ -37,7 +36,7 @@ public class UiItem {
         Item itemToUse = hopeful.orElse(Items.PAPER);
         ItemBuilder builder = new ItemBuilder(itemToUse).hideAdditional().setCustomName(Component.literal(label));
         if (active) {
-            builder.setEnchanted(true)
+            builder = builder.setEnchanted(true)
                     .addLore(new MutableComponent[]{
                             Component.literal("ACTIVE")
                                     .withStyle(style ->
@@ -48,19 +47,25 @@ public class UiItem {
         return builder.build();
     }
 
+    public boolean isActive(ServerPlayer player) {
+        return PermissionManager.comparePrefix(player, prefix);
+    }
+
     public boolean hasPermission(ServerPlayer player) {
         return PermissionManager.hasPermissionNode(player, requiredPermission);
     }
 
     public void onClickAction(ServerPlayer player) {
-        PermissionManager.setUserPrefix(player, prefix);
+        if (!isActive(player)) {
+            PermissionManager.setUserPrefix(player, prefix);
+        }
         UIManager.closeUI(player);
+        UIManager.openUIForcefully(player, new PlateMenu(player).getPage());
     }
 
     public Button getButton(ServerPlayer player) {
-        boolean isActive = PermissionManager.comparePrefix(player, prefix);
         return GooeyButton.builder()
-                .display(getDisplayItem(isActive))
+                .display(getDisplayItem(isActive(player)))
                 .onClick(action -> onClickAction(player))
                 .build();
     }

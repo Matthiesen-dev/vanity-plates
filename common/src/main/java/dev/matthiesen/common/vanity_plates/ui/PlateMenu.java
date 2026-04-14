@@ -24,7 +24,13 @@ import net.minecraft.world.item.Items;
 import java.util.ArrayList;
 import java.util.List;
 
-public record PlateMenu(ServerPlayer player) {
+public class PlateMenu {
+    public ServerPlayer player;
+
+    public PlateMenu(ServerPlayer player) {
+        this.player = player;
+    }
+
     public Component getDisplayTitle() {
         return Component.literal("Vanity Plates")
                 .withStyle(style ->
@@ -33,13 +39,13 @@ public record PlateMenu(ServerPlayer player) {
                 );
     }
 
-    public static ItemStack getFrameItem() {
+    public ItemStack getFrameItem() {
         return new ItemBuilder(Items.GRAY_STAINED_GLASS_PANE)
                 .setCustomName(Component.literal(" "))
                 .build();
     }
 
-    public static ItemStack getNavItem(String label) {
+    public ItemStack getNavItem(String label) {
         return new ItemBuilder(Items.ARROW)
                 .hideAdditional()
                 .setCustomName(
@@ -51,7 +57,7 @@ public record PlateMenu(ServerPlayer player) {
                 .build();
     }
 
-    public static ItemStack getClearItem() {
+    public ItemStack getClearItem() {
         return new ItemBuilder(Items.ARROW)
                 .hideAdditional()
                 .setCustomName(
@@ -63,7 +69,7 @@ public record PlateMenu(ServerPlayer player) {
                 .build();
     }
 
-    public static ItemStack getPageItem(int currentPage, int pageLength) {
+    public ItemStack getPageItem(int currentPage, int pageLength) {
         return new ItemBuilder(Items.BOOK)
                 .setCustomName(
                         Component.literal("Page " + currentPage + "/" + pageLength).withStyle(style -> style.withColor(ChatFormatting.GOLD))
@@ -146,10 +152,10 @@ public record PlateMenu(ServerPlayer player) {
 
         ChestTemplate template = ChestTemplate.builder(6)
                 .rectangle(0, 0, 5, 9, placeholder)
-                .set(53, next)
+                .set(45, previous)
                 .set(47, getClearButton())
                 .set(49, getInfoButton(1, 1))
-                .set(45, previous)
+                .set(53, next)
                 .fill(getFrameButton())
                 .build();
 
