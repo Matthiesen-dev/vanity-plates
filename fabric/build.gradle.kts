@@ -28,6 +28,7 @@ dependencies {
     modRuntimeOnly("net.fabricmc.fabric-api:fabric-api:${property("fabric_api_version")}")
     modImplementation(fabricApi.module("fabric-command-api-v2", property("fabric_api_version").toString()))
     modImplementation(fabricApi.module("fabric-lifecycle-events-v1", property("fabric_api_version").toString()))
+    modImplementation("me.lucko:fabric-permissions-api:${property("fabric_permission_api")}")
 
     implementation(project(":common", configuration = "namedElements"))
     "developmentFabric"(project(":common", configuration = "namedElements"))

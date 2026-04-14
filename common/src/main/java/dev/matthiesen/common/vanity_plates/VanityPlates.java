@@ -14,7 +14,6 @@ import net.minecraft.server.MinecraftServer;
 public class VanityPlates {
     public static ModConfig config;
     public static MinecraftServer currentServer;
-    public static LuckPerms luckPerms;
 
     public static void initialize() {
         Constants.createInfoLog("Initialized");
@@ -29,19 +28,6 @@ public class VanityPlates {
     public static void onShutdown() {
         Constants.createInfoLog("Server stopping, shutting down");
         new ConfigManager().saveConfig();
-    }
-
-    public static LuckPerms getLuckPerms() {
-        if (luckPerms == null) {
-            try {
-                luckPerms = LuckPermsProvider.get();
-                Constants.createInfoLog("LuckPerms API loaded successfully");
-            } catch (IllegalStateException e) {
-                Constants.createErrorLog("LuckPerms not available, chat prefix will not be applied");
-                return null;
-            }
-        }
-        return luckPerms;
     }
 
     public static void registerCommands(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext registry, Commands.CommandSelection context) {
