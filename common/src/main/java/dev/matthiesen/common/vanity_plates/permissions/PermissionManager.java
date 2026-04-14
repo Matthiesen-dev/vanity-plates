@@ -4,7 +4,6 @@ import dev.matthiesen.common.vanity_plates.Constants;
 import dev.matthiesen.common.vanity_plates.VanityPlates;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.model.user.UserManager;
 import net.luckperms.api.node.NodeType;
@@ -53,12 +52,6 @@ public class PermissionManager {
         User user = getLPUser(player);
         if (user == null) return false;
         return user.getCachedData().getPermissionData().checkPermission(node).asBoolean();
-    }
-
-    public static CachedMetaData getUserMetadata(ServerPlayer player) {
-        User user = getLPUser(player);
-        if (user == null) return null;
-        return user.getCachedData().getMetaData();
     }
 
     public static boolean comparePrefix(ServerPlayer player, String prefix) {

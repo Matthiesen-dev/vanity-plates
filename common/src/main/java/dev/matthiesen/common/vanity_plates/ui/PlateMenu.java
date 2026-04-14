@@ -51,6 +51,18 @@ public record PlateMenu(ServerPlayer player) {
                 .build();
     }
 
+    public static ItemStack getClearItem() {
+        return new ItemBuilder(Items.ARROW)
+                .hideAdditional()
+                .setCustomName(
+                        Component.literal("Clear Prefix")
+                                .withStyle(
+                                        style -> style.withColor(ChatFormatting.RED)
+                                )
+                )
+                .build();
+    }
+
     public static ItemStack getPageItem(int currentPage, int pageLength) {
         return new ItemBuilder(Items.BOOK)
                 .setCustomName(
@@ -110,13 +122,26 @@ public record PlateMenu(ServerPlayer player) {
         return buttonList;
     }
 
+    public Button getClearButton() {
+        return GooeyButton.builder()
+                .display(getClearItem())
+                .onClick(action -> {
+                    PermissionManager.clearUserPrefix(player);
+                    UIManager.closeUI(player);
+                    UIManager.openUIForcefully(player, getPage());
+                })
+                .build();
+    }
+
+    public Button getFrameButton() {
+        return GooeyButton.builder()
+                .display(getFrameItem())
+                .build();
+    }
+
     public Page getPage() {
         PlaceholderButton placeholder = new PlaceholderButton();
         List<Button> buttons = getButtons();
-
-        Button frame = GooeyButton.builder()
-                .display(getFrameItem())
-                .build();
 
         LinkedPageButton previous = LinkedPageButton.builder()
                 .display(getNavItem("Previous"))
@@ -131,9 +156,10 @@ public record PlateMenu(ServerPlayer player) {
         ChestTemplate template = ChestTemplate.builder(6)
                 .rectangle(0, 0, 5, 9, placeholder)
                 .set(53, next)
+                .set(47, getClearButton())
                 .set(49, getInfoButton(1, 1))
                 .set(45, previous)
-                .fill(frame)
+                .fill(getFrameButton())
                 .build();
 
         LinkedPage page = PaginationHelper.createPagesFromPlaceholders(template, buttons, null);
