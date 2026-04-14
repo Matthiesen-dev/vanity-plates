@@ -1,1 +1,1 @@
-# template-cobblemon-sidemod
+# Vanity Plates

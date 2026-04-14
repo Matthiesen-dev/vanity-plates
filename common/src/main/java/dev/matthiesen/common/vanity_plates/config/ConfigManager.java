@@ -1,10 +1,10 @@
-package dev.matthiesen.common.template_cobblemon_sidemod.config;
+package dev.matthiesen.common.vanity_plates.config;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import dev.matthiesen.common.template_cobblemon_sidemod.Constants;
-import dev.matthiesen.common.template_cobblemon_sidemod.interfaces.IConfigManager;
+import dev.matthiesen.common.vanity_plates.Constants;
+import dev.matthiesen.common.vanity_plates.interfaces.IConfigManager;
 
 import java.io.File;
 import java.io.FileReader;

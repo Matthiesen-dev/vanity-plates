@@ -31,20 +31,14 @@ dependencies {
     mappings(loom.officialMojangMappings())
     neoForge("net.neoforged:neoforge:${property("neoforge_version")}")
 
-    modImplementation("com.cobblemon:neoforge:${property("cobblemon_version")}") { isTransitive = false }
-    //Needed for cobblemon
-    forgeRuntimeLibrary("thedarkcolour:kotlinforforge-neoforge:${property("kotlin_for_forge_version")}") {
-        exclude("net.neoforged.fancymodloader", "loader")
-    }
-
     implementation(project(":common", configuration = "namedElements"))
     "developmentNeoForge"(project(":common", configuration = "namedElements")) {
         isTransitive = false
     }
-    shadowBundle(project(":common", configuration = "transformProductionFabric"))
+    shadowBundle(project(":common", configuration = "transformProductionNeoForge"))
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${property("junit_version")}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${property("junit_version")}")
+    modRuntimeOnly("ca.landonjw.gooeylibs:neoforge:${property("gooeylibs_version")}")
+    modRuntimeOnly(files("${rootProject.rootDir}/jars/LuckPerms-NeoForge-${property("luckperms_mod_version")}.jar"))
 }
 
 tasks {

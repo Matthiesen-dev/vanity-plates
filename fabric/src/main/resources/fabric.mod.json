@@ -2,17 +2,17 @@
   "schemaVersion": 1,
   "id": "${mod_id}",
   "version": "${version}",
-  "name": "Cobblemon Multi-platform Fabric MDK",
+  "name": "Vanity Plates",
   "description": "A MDK useful for Fabric Development",
   "authors": [
-    "The Cobblemon Team"
+    "Adam Matthiesen"
   ],
   "license": "MIT License",
   "icon": "assets/example/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "dev.matthiesen.fabric.template_cobblemon_sidemod.FabricModExample"
+      "dev.matthiesen.fabric.vanity_plates.VanityPlatesFabric"
     ]
   },
   "depends": {
