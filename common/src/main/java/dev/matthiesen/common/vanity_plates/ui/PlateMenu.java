@@ -105,16 +105,7 @@ public record PlateMenu(ServerPlayer player) {
         for (ModConfig.PlateEntry plate : rawPlates) {
             UiItem entryData = new UiItem(plate);
             if (entryData.hasPermission(player)) {
-                boolean isActive = PermissionManager.comparePrefix(player, entryData.getPrefix());
-
-                Button newButton = GooeyButton.builder()
-                        .display(entryData.getDisplayItem(isActive))
-                        .onClick(action -> {
-                            PermissionManager.setUserPrefix(player, entryData.getPrefix());
-                            UIManager.closeUI(player);
-                        })
-                        .build();
-
+                Button newButton = entryData.getButton(player);
                 buttonList.add(newButton);
             }
         }

@@ -1,5 +1,8 @@
 package dev.matthiesen.common.vanity_plates.ui;
 
+import ca.landonjw.gooeylibs2.api.UIManager;
+import ca.landonjw.gooeylibs2.api.button.Button;
+import ca.landonjw.gooeylibs2.api.button.GooeyButton;
 import dev.matthiesen.common.vanity_plates.config.ModConfig;
 import dev.matthiesen.common.vanity_plates.permissions.PermissionManager;
 import dev.matthiesen.common.vanity_plates.util.ItemBuilder;
@@ -25,7 +28,6 @@ public class UiItem {
     public UiItem(ModConfig.PlateEntry entry) {
         rawDisplayItem = entry.displayItem;
         requiredPermission = entry.requiredPermission;
-
         label = entry.label;
         prefix = entry.prefix;
     }
@@ -46,11 +48,20 @@ public class UiItem {
         return builder.build();
     }
 
-    public String getPrefix() {
-        return prefix;
-    }
-
     public boolean hasPermission(ServerPlayer player) {
         return PermissionManager.hasPermissionNode(player, requiredPermission);
+    }
+
+    public void onClickAction(ServerPlayer player) {
+        PermissionManager.setUserPrefix(player, prefix);
+        UIManager.closeUI(player);
+    }
+
+    public Button getButton(ServerPlayer player) {
+        boolean isActive = PermissionManager.comparePrefix(player, prefix);
+        return GooeyButton.builder()
+                .display(getDisplayItem(isActive))
+                .onClick(action -> onClickAction(player))
+                .build();
     }
 }
