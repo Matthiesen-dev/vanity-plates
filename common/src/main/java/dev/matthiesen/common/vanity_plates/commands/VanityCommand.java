@@ -14,7 +14,7 @@ import net.minecraft.server.level.ServerPlayer;
 import java.util.List;
 
 public class VanityCommand implements ICommand {
-    private final List<String> aliases = List.of("vanity", "plates", "ranks");
+    private final List<String> aliases = List.of("vanity", "plates");
 
     @Override
     public void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext registry, Commands.CommandSelection context) {
