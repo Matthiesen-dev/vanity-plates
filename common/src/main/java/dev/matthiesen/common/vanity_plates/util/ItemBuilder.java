@@ -1,11 +1,10 @@
 package dev.matthiesen.common.vanity_plates.util;
+import dev.matthiesen.common.vanity_plates.Constants;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Unit;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.ItemLore;
 
 import java.util.Arrays;
@@ -41,24 +40,6 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder setCustomData(CustomData data) {
-        // If the stack has custom data, get it and append the new data to it,
-        // otherwise create a new custom data with the new data
-        CustomData customData = stack.has(DataComponents.CUSTOM_DATA)
-                ? stack.get(DataComponents.CUSTOM_DATA)
-                : CustomData.of(new CompoundTag());
-
-        assert customData != null;
-        CompoundTag newTag = customData.copyTag();
-        CompoundTag tag = data.copyTag();
-
-        tag.getAllKeys().forEach(key -> newTag.put(key, tag.get(key)));
-
-        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(newTag));
-        stack.set(DataComponents.MAX_STACK_SIZE, 1);
-        return this;
-    }
-
     public ItemBuilder hideAdditional() {
         stack.set(DataComponents.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
         return this;
@@ -69,9 +50,31 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder setCustomName(String plainText) {
+        plainText = convertColorCodes(plainText);
+        Component textComp = parseMinecraftComponent(plainText);
+        return setCustomName(textComp);
+    }
+
     public ItemBuilder setEnchanted(boolean value) {
         stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, value);
         return this;
+    }
+
+    private String convertColorCodes(String text) {
+        if (text == null || text.isEmpty()) return text;
+        return text.replace('&', '§');
+    }
+
+    private Component parseMinecraftComponent(String text) {
+        if (text == null || text.isEmpty()) return Component.empty();
+
+        try {
+            return Component.literal(text);
+        } catch (Exception e) {
+            Constants.LOGGER.warn("Failed to parse component: {}", text, e);
+            return Component.literal(text);
+        }
     }
 
     public ItemStack build() {

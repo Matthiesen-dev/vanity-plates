@@ -34,7 +34,7 @@ public class UiItem {
     public ItemStack getDisplayItem(boolean active) {
         Optional<Item> hopeful = BuiltInRegistries.ITEM.getOptional(ResourceLocation.parse(rawDisplayItem));
         Item itemToUse = hopeful.orElse(Items.PAPER);
-        ItemBuilder builder = new ItemBuilder(itemToUse).hideAdditional().setCustomName(Component.literal(label));
+        ItemBuilder builder = new ItemBuilder(itemToUse).hideAdditional().setCustomName(label);
         if (active) {
             builder = builder.setEnchanted(true)
                     .addLore(new MutableComponent[]{
