@@ -45,14 +45,16 @@ public class UiItem {
         if (customModelData != null) {
             builder = builder.setCustomModalData(customModelData);
         }
+        Component[] lore = new Component[] {
+                Component.literal("Set your prefix to " + prefix)
+                        .withStyle(style -> style.withColor(ChatFormatting.GRAY)),
+                active
+                    ? Component.literal("ACTIVE").withStyle(style -> style.withColor(ChatFormatting.GREEN))
+                        : Component.empty()
+        };
+        builder = builder.addLore(lore);
         if (active) {
-            builder = builder.setEnchanted(true)
-                    .addLore(new MutableComponent[]{
-                            Component.literal("ACTIVE")
-                                    .withStyle(style ->
-                                            style.withColor(ChatFormatting.GREEN)
-                                    )
-                    });
+            builder = builder.setEnchanted(true);
         }
         return builder.build();
     }
