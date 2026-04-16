@@ -10,6 +10,7 @@ import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.PrefixNode;
 import net.minecraft.server.level.ServerPlayer;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
@@ -57,8 +58,9 @@ public class PermissionManager {
     public static boolean comparePrefix(ServerPlayer player, String prefix) {
         User user = getLPUser(player);
         if (user == null) return false;
-        String currentPrefix = user.getCachedData().getMetaData().getPrefix();
-        return Objects.equals(currentPrefix, prefix);
+        PrefixNode node = PrefixNode.builder(prefix, VanityPlates.config.prefixPriority).build();
+        Collection<PrefixNode> prefixes = user.getNodes(NodeType.PREFIX);
+        return prefixes.contains(node);
     }
 
     public static void setUserPrefix(ServerPlayer player, String newPrefix) {

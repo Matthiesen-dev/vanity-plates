@@ -58,7 +58,7 @@ public class PlateMenu {
     }
 
     public ItemStack getClearItem() {
-        return new ItemBuilder(Items.ARROW)
+        return new ItemBuilder(Items.NAME_TAG)
                 .hideAdditional()
                 .setCustomName(
                         Component.literal("Clear Prefix")
