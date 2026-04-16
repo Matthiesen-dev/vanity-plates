@@ -3,7 +3,7 @@
   "id": "${mod_id}",
   "version": "${version}",
   "name": "Vanity Plates",
-  "description": "A MDK useful for Fabric Development",
+  "description": "A simple Server-side mod for \"vanity\" prefixes that users can assign via a friendly and easy to use in-game GUI.",
   "authors": [
     "Adam Matthiesen"
   ],

@@ -9,7 +9,7 @@ version = "${version}"
 displayName = "Vanity Plates"
 authors = "Adam Matthiesen"
 description = '''
-A very cool multi-line description!
+A simple Server-side mod for "vanity" prefixes that users can assign via a friendly and easy to use in-game GUI.
 '''
 #logoFile = ""
 
