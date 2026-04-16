@@ -24,10 +24,15 @@ public class VanityCommand implements ICommand {
                             .executes(this::execute)
                             .then(
                                     Commands.literal("reload")
-                                            .requires(src -> src.hasPermission(4))
+                                            .requires(this::isOP)
                                             .executes(this::reload)
-                            ));
+                            )
+            );
         }
+    }
+
+    private boolean isOP(CommandSourceStack source) {
+        return source.getPlayer() != null && source.getPlayer().hasPermissions(4);
     }
 
     private int execute(CommandContext<CommandSourceStack> ctx) {
