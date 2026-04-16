@@ -46,11 +46,10 @@ public class UiItem {
             builder = builder.setCustomModalData(customModelData);
         }
         Component[] lore = new Component[] {
-                Component.literal("Set your prefix to " + prefix)
-                        .withStyle(style -> style.withColor(ChatFormatting.GRAY)),
                 active
                     ? Component.literal("ACTIVE").withStyle(style -> style.withColor(ChatFormatting.GREEN))
-                        : Component.empty()
+                        : Component.literal("Click to set as your prefix")
+                          .withStyle(style -> style.withColor(ChatFormatting.GRAY))
         };
         builder = builder.addLore(lore);
         if (active) {
