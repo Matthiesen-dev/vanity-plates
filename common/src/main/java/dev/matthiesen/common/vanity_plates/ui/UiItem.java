@@ -15,6 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -23,18 +24,27 @@ public class UiItem {
     public String requiredPermission;
     public String label;
     public String prefix;
+    public @Nullable Integer customModelData;
 
     public UiItem(ModConfig.PlateEntry entry) {
         rawDisplayItem = entry.displayItem;
         requiredPermission = entry.requiredPermission;
         label = entry.label;
         prefix = entry.prefix;
+        if (entry.customModelData != null) {
+            customModelData = entry.customModelData;
+        } else {
+            customModelData = null;
+        }
     }
 
     public ItemStack getDisplayItem(boolean active) {
         Optional<Item> hopeful = BuiltInRegistries.ITEM.getOptional(ResourceLocation.parse(rawDisplayItem));
         Item itemToUse = hopeful.orElse(Items.PAPER);
         ItemBuilder builder = new ItemBuilder(itemToUse).hideAdditional().setCustomName(label);
+        if (customModelData != null) {
+            builder = builder.setCustomModalData(customModelData);
+        }
         if (active) {
             builder = builder.setEnchanted(true)
                     .addLore(new MutableComponent[]{

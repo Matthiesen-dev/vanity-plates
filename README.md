@@ -21,6 +21,7 @@ The configuration file will be located at `./config/vanity_plates/config.json` a
   "availablePlates": [
     {
       "displayItem": "minecraft:paper",
+      "customModelData": null,
       "label": "Demo",
       "requiredPermission": "demo.plate",
       "prefix": "[Demo]"

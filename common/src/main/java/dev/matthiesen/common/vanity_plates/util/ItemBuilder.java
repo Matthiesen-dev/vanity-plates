@@ -5,6 +5,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Unit;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.item.component.ItemLore;
 
 import java.util.Arrays;
@@ -37,6 +38,11 @@ public class ItemBuilder {
 
         itemLore = new ItemLore(list);
         stack.set(DataComponents.LORE, itemLore);
+        return this;
+    }
+
+    public ItemBuilder setCustomModalData(int value) {
+        stack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(value));
         return this;
     }
 
