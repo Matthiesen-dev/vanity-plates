@@ -8,9 +8,9 @@ import net.luckperms.api.model.user.User;
 import net.luckperms.api.model.user.UserManager;
 import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.PrefixNode;
-import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Collection;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public final class LPHelper {
@@ -33,15 +33,15 @@ public final class LPHelper {
         return luckPerms;
     }
 
-    private static User getLPUser(ServerPlayer player) {
+    private static User getLPUser(UUID playerUUID) {
         try {
             LuckPerms lp = getLuckPerms();
             if (lp == null) return null;
             UserManager userManager = lp.getUserManager();
-            CompletableFuture<User> asyncUser = userManager.loadUser(player.getUUID());
+            CompletableFuture<User> asyncUser = userManager.loadUser(playerUUID);
             return asyncUser.join();
         } catch (Exception e) {
-            Constants.createErrorLog("Failed to load LuckPerms user for player: " + player.getName().getString(), e);
+            Constants.createErrorLog("Failed to load LuckPerms user for UUID: " + playerUUID, e);
             return null;
         }
     }
@@ -57,22 +57,22 @@ public final class LPHelper {
         }
     }
 
-    public static boolean hasPermissionNode(ServerPlayer player, String node) {
-        User user = getLPUser(player);
+    public static boolean hasPermissionNode(UUID playerUUID, String node) {
+        User user = getLPUser(playerUUID);
         if (user == null) return false;
         return user.getCachedData().getPermissionData().checkPermission(node).asBoolean();
     }
 
-    public static boolean comparePrefix(ServerPlayer player, String prefix) {
-        User user = getLPUser(player);
+    public static boolean comparePrefix(UUID playerUUID, String prefix) {
+        User user = getLPUser(playerUUID);
         if (user == null) return false;
         PrefixNode node = PrefixNode.builder(prefix, VanityPlates.getConfig().prefixPriority).build();
         Collection<PrefixNode> prefixes = user.getNodes(NodeType.PREFIX);
         return prefixes.contains(node);
     }
 
-    public static void setUserPrefix(ServerPlayer player, String newPrefix) {
-        User user = getLPUser(player);
+    public static void setUserPrefix(UUID playerUUID, String newPrefix) {
+        User user = getLPUser(playerUUID);
         if (user == null) return;
         PrefixNode node = PrefixNode.builder(newPrefix, VanityPlates.getConfig().prefixPriority).build();
         xClearPrefix(user);
@@ -80,8 +80,8 @@ public final class LPHelper {
         saveUser(user);
     }
 
-    public static void clearUserPrefix(ServerPlayer player) {
-        User user = getLPUser(player);
+    public static void clearUserPrefix(UUID playerUUID) {
+        User user = getLPUser(playerUUID);
         if (user == null) return;
         xClearPrefix(user);
         saveUser(user);

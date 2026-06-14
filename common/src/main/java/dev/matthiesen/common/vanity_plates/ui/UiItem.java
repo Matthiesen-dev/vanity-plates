@@ -4,9 +4,9 @@ import ca.landonjw.gooeylibs2.api.UIManager;
 import ca.landonjw.gooeylibs2.api.button.Button;
 import ca.landonjw.gooeylibs2.api.button.GooeyButton;
 import dev.matthiesen.common.matthiesen_lib_api.utility.ItemBuilder;
+import dev.matthiesen.common.vanity_plates.Constants;
 import dev.matthiesen.common.vanity_plates.config.VanityPlatesConfig;
 import dev.matthiesen.common.vanity_plates.util.LPHelper;
-import dev.matthiesen.common.vanity_plates.util.TextUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -38,11 +38,21 @@ public final class UiItem {
             customModelData = null;
         }
     }
+    public Component parseText(String text) {
+        if (text == null || text.isEmpty()) return Component.empty();
+        try {
+            text = text.replace('&', '§');
+            return Component.literal(text);
+        } catch (Exception e) {
+            Constants.createErrorLog("Failed to parse component: " + text, e);
+            return Component.literal(text);
+        }
+    }
 
     public ItemStack getDisplayItem(boolean active) {
         Optional<Item> hopeful = BuiltInRegistries.ITEM.getOptional(ResourceLocation.parse(rawDisplayItem));
         Item itemToUse = hopeful.orElse(Items.PAPER);
-        ItemBuilder builder = new ItemBuilder(itemToUse).hideAdditional().setCustomName(TextUtils.parse(label));
+        ItemBuilder builder = new ItemBuilder(itemToUse).hideAdditional().setCustomName(parseText(label));
         if (customModelData != null) {
             builder = builder.setModelData(customModelData);
         }
@@ -63,16 +73,16 @@ public final class UiItem {
     }
 
     public boolean isActive(ServerPlayer player) {
-        return LPHelper.comparePrefix(player, prefix);
+        return LPHelper.comparePrefix(player.getUUID(), prefix);
     }
 
     public boolean hasPermission(ServerPlayer player) {
-        return LPHelper.hasPermissionNode(player, requiredPermission);
+        return LPHelper.hasPermissionNode(player.getUUID(), requiredPermission);
     }
 
     public void onClickAction(ServerPlayer player) {
         if (!isActive(player)) {
-            LPHelper.setUserPrefix(player, prefix);
+            LPHelper.setUserPrefix(player.getUUID(), prefix);
         }
         UIManager.closeUI(player);
         UIManager.openUIForcefully(player, new PlateMenu(player).getPage());

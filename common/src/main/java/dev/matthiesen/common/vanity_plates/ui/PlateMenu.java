@@ -123,7 +123,7 @@ public final class PlateMenu {
         return GooeyButton.builder()
                 .display(getClearItem())
                 .onClick(action -> {
-                    LPHelper.clearUserPrefix(player);
+                    LPHelper.clearUserPrefix(player.getUUID());
                     UIManager.closeUI(player);
                     UIManager.openUIForcefully(player, getPage());
                 })
