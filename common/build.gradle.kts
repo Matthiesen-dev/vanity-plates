@@ -8,10 +8,6 @@ architectury {
     common("neoforge", "fabric")
 }
 
-loom {
-    silentMojangMappingsLicense()
-}
-
 dependencies {
     minecraft(libs.minecraft)
     mappings(loom.officialMojangMappings())
