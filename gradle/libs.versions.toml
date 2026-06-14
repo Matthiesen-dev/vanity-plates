@@ -47,12 +47,12 @@ gooeylibs-neoforge = { group = "ca.landonjw.gooeylibs", name = "neoforge", versi
 [bundles]
 commonCompileOnly = ["sponge-mixin", "luckperms-api"]
 commonModImplementation = ["gooeylibs-api"]
-commonModImplementationNoTransitive = []
+commonModImplementationNoTransitive = ["matthiesen-lib-api-common"]
 
 fabricModImplementation = ["fabric-loader", "fabric-api", "fabric-permission-api"]
-fabricModImplementationNoTransitive = []
+fabricModImplementationNoTransitive = ["matthiesen-lib-api-fabric"]
 fabricModRuntimeOnly = ["gooeylibs-fabric", "luckperms-fabric"]
 
 neoforgeModImplementation = []
-neoforgeModImplementationNoTransitive = []
+neoforgeModImplementationNoTransitive = ["matthiesen-lib-api-neoforge"]
 neoforgeModRuntimeOnly = ["gooeylibs-neoforge", "luckperms-neoforge"]
