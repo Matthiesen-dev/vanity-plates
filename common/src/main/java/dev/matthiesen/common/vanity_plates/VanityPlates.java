@@ -20,8 +20,8 @@ public final class VanityPlates {
     }
 
     public static void reload() {
-        Constants.createInfoLog("Reloaded Config");
         CONFIG_MANAGER.loadConfig();
+        Constants.createInfoLog("Reloaded Config");
     }
 
     public static VanityPlatesConfig getConfig() {
