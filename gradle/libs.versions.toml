@@ -1,0 +1,58 @@
+[versions]
+kotlin = "2.2.20"
+shadow = "9.3.1"
+architectury-loom = "1.13-SNAPSHOT"
+architectury-plugin = "3.4-SNAPSHOT"
+minecraft = "1.21.1"
+fabric-loader = "0.17.2"
+fabric-api = "0.116.6+1.21.1"
+neoforge = "21.1.182"
+publish = "0.35.0"
+matthiesen_lib = "1.6.2"
+sponge-mixin = "0.8.5"
+luckperms = "5.4"
+luckperms-fabric = "6h9SnsZu" # v5.4.150 Fabric (https://modrinth.com/plugin/luckperms/version/v5.4.150-fabric)
+luckperms-neoforge = "dKAPoPGd" # v5.4.150 NeoForge (https://modrinth.com/plugin/luckperms/version/v5.4.150-neoforge)
+gooeylibs = "3.1.1-1.21.x"
+fabric_permission_api = "0.3.3"
+
+[plugins]
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+architectury-loom = { id = "dev.architectury.loom", version.ref = "architectury-loom" }
+architectury-plugin = { id = "architectury-plugin", version.ref = "architectury-plugin" }
+
+[libraries]
+publish = { group = "com.vanniktech", name = "gradle-maven-publish-plugin", version.ref = "publish" }
+kotlin-gradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+architectury-loom = { group = "dev.architectury", name = "architectury-loom", version.ref = "architectury-loom" }
+architectury-plugin = { group = "architectury-plugin", name = "architectury-plugin.gradle.plugin", version.ref = "architectury-plugin" }
+shadow-gradle = { group = "com.gradleup.shadow", name = "shadow-gradle-plugin", version.ref = "shadow" }
+minecraft = { group = "com.mojang", name = "minecraft", version.ref = "minecraft" }
+minecraft-net = { group = "net.minecraft", name = "minecraft", version.ref = "minecraft" }
+fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version.ref = "fabric-loader" }
+fabric-api = { group = "net.fabricmc.fabric-api", name = "fabric-api", version.ref = "fabric-api" }
+neoforge = { group = "net.neoforged", name = "neoforge", version.ref = "neoforge" }
+matthiesen-lib-api-common = { group = "dev.matthiesen", name = "matthiesen-lib-api-common", version.ref = "matthiesen_lib" }
+matthiesen-lib-api-fabric = { group = "dev.matthiesen", name = "matthiesen-lib-api-fabric", version.ref = "matthiesen_lib" }
+matthiesen-lib-api-neoforge = { group = "dev.matthiesen", name = "matthiesen-lib-api-neoforge", version.ref = "matthiesen_lib" }
+sponge-mixin = { group = "org.spongepowered", name = "mixin", version.ref = "sponge-mixin" }
+fabric-permission-api = { group = "me.lucko", name = "fabric-permissions-api", version.ref = "fabric_permission_api" }
+luckperms-api = { group = "net.luckperms", name = "api", version.ref = "luckperms" }
+luckperms-fabric = { group = "maven.modrinth", name = "luckperms", version.ref = "luckperms-fabric" }
+luckperms-neoforge = { group = "maven.modrinth", name = "luckperms", version.ref = "luckperms-neoforge" }
+gooeylibs-api = { group = "ca.landonjw.gooeylibs", name = "api", version.ref = "gooeylibs" }
+gooeylibs-fabric = { group = "ca.landonjw.gooeylibs", name = "fabric", version.ref = "gooeylibs" }
+gooeylibs-neoforge = { group = "ca.landonjw.gooeylibs", name = "neoforge", version.ref = "gooeylibs" }
+
+[bundles]
+commonCompileOnly = ["sponge-mixin", "luckperms-api"]
+commonModImplementation = ["gooeylibs-api"]
+commonModImplementationNoTransitive = []
+
+fabricModImplementation = ["fabric-loader", "fabric-api", "fabric-permission-api"]
+fabricModImplementationNoTransitive = []
+fabricModRuntimeOnly = ["gooeylibs-fabric", "luckperms-fabric"]
+
+neoforgeModImplementation = []
+neoforgeModImplementationNoTransitive = []
+neoforgeModRuntimeOnly = ["gooeylibs-neoforge", "luckperms-neoforge"]

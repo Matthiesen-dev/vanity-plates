@@ -1,15 +1,15 @@
 modLoader = "javafml"
 loaderVersion = "[1,)"
-#issueTrackerURL = "A valid URL to your issue tracker where people can open bug tickets"
-license = "MIT License"
+issueTrackerURL = "${github_url}/issues"
+license = "${mod_license}"
 
 [[mods]]
 modId = "${mod_id}"
 version = "${version}"
-displayName = "Vanity Plates"
-authors = "Adam Matthiesen"
+displayName = "${mod_name}"
+authors = "${mod_author}"
 description = '''
-A simple Server-side mod for "vanity" prefixes that users can assign via a friendly and easy to use in-game GUI.
+${mod_description}
 '''
 #logoFile = ""
 

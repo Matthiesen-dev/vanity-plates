@@ -2,13 +2,20 @@
   "schemaVersion": 1,
   "id": "${mod_id}",
   "version": "${version}",
-  "name": "Vanity Plates",
-  "description": "A simple Server-side mod for \"vanity\" prefixes that users can assign via a friendly and easy to use in-game GUI.",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
   "authors": [
-    "Adam Matthiesen"
+    "${mod_author}"
   ],
-  "license": "MIT License",
-  "icon": "assets/example/icon.png",
+  "license": "${mod_license}",
+  "icon": "icon.png",
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.github_releases": "${github_url}"
+      }
+    }
+  },
   "environment": "*",
   "entrypoints": {
     "main": [
