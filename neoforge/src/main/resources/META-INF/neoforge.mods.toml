@@ -26,3 +26,10 @@ mandatory = true
 versionRange = "[21.1.182,)"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "matthiesen-lib-api"
+mandatory = true
+versionRange = "[1.6.2,)"
+ordering = "AFTER"
+side = "SERVER"
