@@ -16,36 +16,45 @@ import java.util.concurrent.CompletableFuture;
 public final class LPHelper {
     private static LuckPerms luckPerms;
 
-    public static LuckPerms getLuckPerms() {
+    private static void xClearPrefix(User user) {
+        user.data().clear(NodeType.PREFIX.predicate(pre -> pre.getPriority() == VanityPlates.getConfig().prefixPriority));
+    }
+
+    private static LuckPerms getLuckPerms() {
         if (luckPerms == null) {
             try {
                 luckPerms = LuckPermsProvider.get();
                 Constants.createInfoLog("LuckPerms API loaded successfully");
             } catch (IllegalStateException e) {
-                Constants.createErrorLog("LuckPerms not available");
+                Constants.createErrorLog("LuckPerms not available", e);
                 return null;
             }
         }
         return luckPerms;
     }
 
-    public static User getLPUser(ServerPlayer player) {
-        LuckPerms lp = getLuckPerms();
-        if (lp == null) return null;
-        UserManager userManager = lp.getUserManager();
-        CompletableFuture<User> asyncUser = userManager.loadUser(player.getUUID());
-        return asyncUser.join();
+    private static User getLPUser(ServerPlayer player) {
+        try {
+            LuckPerms lp = getLuckPerms();
+            if (lp == null) return null;
+            UserManager userManager = lp.getUserManager();
+            CompletableFuture<User> asyncUser = userManager.loadUser(player.getUUID());
+            return asyncUser.join();
+        } catch (Exception e) {
+            Constants.createErrorLog("Failed to load LuckPerms user for player: " + player.getName().getString(), e);
+            return null;
+        }
     }
 
-    public static void saveUser(User user) {
-        LuckPerms lp = getLuckPerms();
-        if (lp == null) return;
-        UserManager userManager = lp.getUserManager();
-        userManager.saveUser(user);
-    }
-
-    public static void xClearPrefix(User user) {
-        user.data().clear(NodeType.PREFIX.predicate(pre -> pre.getPriority() == VanityPlates.getConfig().prefixPriority));
+    private static void saveUser(User user) {
+        try {
+            LuckPerms lp = getLuckPerms();
+            if (lp == null) return;
+            UserManager userManager = lp.getUserManager();
+            userManager.saveUser(user);
+        } catch (Exception e) {
+            Constants.createErrorLog("Failed to save LuckPerms user: " + user.getUsername(), e);
+        }
     }
 
     public static boolean hasPermissionNode(ServerPlayer player, String node) {
