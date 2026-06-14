@@ -1,4 +1,4 @@
-package dev.matthiesen.common.vanity_plates.permissions;
+package dev.matthiesen.common.vanity_plates.util;
 
 import dev.matthiesen.common.vanity_plates.Constants;
 import dev.matthiesen.common.vanity_plates.VanityPlates;
@@ -11,10 +11,9 @@ import net.luckperms.api.node.types.PrefixNode;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Collection;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
-public class PermissionManager {
+public final class LPHelper {
     private static LuckPerms luckPerms;
 
     public static LuckPerms getLuckPerms() {
@@ -46,7 +45,7 @@ public class PermissionManager {
     }
 
     public static void xClearPrefix(User user) {
-        user.data().clear(NodeType.PREFIX.predicate(pre -> pre.getPriority() == VanityPlates.config.prefixPriority));
+        user.data().clear(NodeType.PREFIX.predicate(pre -> pre.getPriority() == VanityPlates.getConfig().prefixPriority));
     }
 
     public static boolean hasPermissionNode(ServerPlayer player, String node) {
@@ -58,7 +57,7 @@ public class PermissionManager {
     public static boolean comparePrefix(ServerPlayer player, String prefix) {
         User user = getLPUser(player);
         if (user == null) return false;
-        PrefixNode node = PrefixNode.builder(prefix, VanityPlates.config.prefixPriority).build();
+        PrefixNode node = PrefixNode.builder(prefix, VanityPlates.getConfig().prefixPriority).build();
         Collection<PrefixNode> prefixes = user.getNodes(NodeType.PREFIX);
         return prefixes.contains(node);
     }
@@ -66,7 +65,7 @@ public class PermissionManager {
     public static void setUserPrefix(ServerPlayer player, String newPrefix) {
         User user = getLPUser(player);
         if (user == null) return;
-        PrefixNode node = PrefixNode.builder(newPrefix, VanityPlates.config.prefixPriority).build();
+        PrefixNode node = PrefixNode.builder(newPrefix, VanityPlates.getConfig().prefixPriority).build();
         xClearPrefix(user);
         user.data().add(node);
         saveUser(user);

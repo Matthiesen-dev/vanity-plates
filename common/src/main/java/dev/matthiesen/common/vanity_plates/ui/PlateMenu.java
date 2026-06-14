@@ -11,10 +11,10 @@ import ca.landonjw.gooeylibs2.api.page.LinkedPage;
 import ca.landonjw.gooeylibs2.api.page.Page;
 import ca.landonjw.gooeylibs2.api.template.slot.TemplateSlotDelegate;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
+import dev.matthiesen.common.matthiesen_lib_api.utility.ItemBuilder;
 import dev.matthiesen.common.vanity_plates.VanityPlates;
-import dev.matthiesen.common.vanity_plates.config.ModConfig;
-import dev.matthiesen.common.vanity_plates.permissions.PermissionManager;
-import dev.matthiesen.common.vanity_plates.util.ItemBuilder;
+import dev.matthiesen.common.vanity_plates.config.VanityPlatesConfig;
+import dev.matthiesen.common.vanity_plates.util.LPHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.chat.Component;
@@ -24,7 +24,7 @@ import net.minecraft.world.item.Items;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlateMenu {
+public final class PlateMenu {
     public ServerPlayer player;
 
     public PlateMenu(ServerPlayer player) {
@@ -106,9 +106,9 @@ public class PlateMenu {
 
     public List<Button> getButtons() {
         List<Button> buttonList = new ArrayList<>();
-        var rawPlates = VanityPlates.config.availablePlates;
+        var rawPlates = VanityPlates.getConfig().availablePlates;
 
-        for (ModConfig.PlateEntry plate : rawPlates) {
+        for (VanityPlatesConfig.PlateEntry plate : rawPlates) {
             UiItem entryData = new UiItem(plate);
             if (entryData.hasPermission(player)) {
                 Button newButton = entryData.getButton(player);
@@ -123,7 +123,7 @@ public class PlateMenu {
         return GooeyButton.builder()
                 .display(getClearItem())
                 .onClick(action -> {
-                    PermissionManager.clearUserPrefix(player);
+                    LPHelper.clearUserPrefix(player);
                     UIManager.closeUI(player);
                     UIManager.openUIForcefully(player, getPage());
                 })

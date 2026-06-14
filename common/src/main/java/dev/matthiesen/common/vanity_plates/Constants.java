@@ -3,7 +3,7 @@ package dev.matthiesen.common.vanity_plates;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Constants {
+public final class Constants {
     public static final String MOD_ID = "vanity_plates";
     public static final String ModName = "Vanity Plates";
 
