@@ -8,13 +8,13 @@ fabric-loader = "0.17.2"
 fabric-api = "0.116.6+1.21.1"
 neoforge = "21.1.182"
 publish = "0.35.0"
-matthiesen_lib = "1.6.2"
+matthiesen_lib = "1.7.0"
 sponge-mixin = "0.8.5"
 luckperms = "5.4"
 luckperms-fabric = "6h9SnsZu" # v5.4.150 Fabric (https://modrinth.com/plugin/luckperms/version/v5.4.150-fabric)
 luckperms-neoforge = "dKAPoPGd" # v5.4.150 NeoForge (https://modrinth.com/plugin/luckperms/version/v5.4.150-neoforge)
 gooeylibs = "3.1.1-1.21.x"
-fabric_permission_api = "0.3.3"
+fabric_permission_api = "0.3.1"
 
 [plugins]
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
@@ -45,14 +45,14 @@ gooeylibs-fabric = { group = "ca.landonjw.gooeylibs", name = "fabric", version.r
 gooeylibs-neoforge = { group = "ca.landonjw.gooeylibs", name = "neoforge", version.ref = "gooeylibs" }
 
 [bundles]
-commonCompileOnly = ["sponge-mixin", "luckperms-api"]
+commonCompileOnly = ["luckperms-api"]
 commonModImplementation = ["gooeylibs-api"]
-commonModImplementationNoTransitive = []
+commonModImplementationNoTransitive = ["matthiesen-lib-api-common"]
 
 fabricModImplementation = ["fabric-loader", "fabric-api", "fabric-permission-api"]
-fabricModImplementationNoTransitive = []
+fabricModImplementationNoTransitive = ["matthiesen-lib-api-fabric"]
 fabricModRuntimeOnly = ["gooeylibs-fabric", "luckperms-fabric"]
 
 neoforgeModImplementation = []
-neoforgeModImplementationNoTransitive = []
+neoforgeModImplementationNoTransitive = ["matthiesen-lib-api-neoforge"]
 neoforgeModRuntimeOnly = ["gooeylibs-neoforge", "luckperms-neoforge"]

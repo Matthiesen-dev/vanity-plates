@@ -1,4 +1,4 @@
-package dev.matthiesen.common.vanity_plates.config;
+package dev.matthiesen.vanity_plates.common.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ModConfig {
+public final class VanityPlatesConfig {
     @SerializedName("prefixPriority")
     public int prefixPriority = 1000;
 
@@ -47,6 +47,7 @@ public class ModConfig {
         }
     }
 
+    @SuppressWarnings("unused")
     public static final Gson GSON = new GsonBuilder()
             .disableHtmlEscaping()
             .setPrettyPrinting()
