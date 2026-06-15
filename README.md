@@ -1,58 +1,31 @@
 # Vanity Plates
 
+<div>
+  <img src="https://mods.matthiesen.dev/badges/matthiesenLibAPI.svg" alt="Matthiesen Lib API">
+  <img src="https://mods.matthiesen.dev/badges/gooeylibs.svg" alt="GooeyLibs">
+  <img src="https://mods.matthiesen.dev/badges/luckperms.svg" alt="Luckperms">
+</div>
+
 A simple Server-side mod for "vanity" prefixes that users can assign via a friendly and easy to use in-game GUI.
 
 Simply configure your user-assignable prefixes in the configuration file, and assign your users the 
 permission node via LuckPerms, and the user can now Set that as a personal prefix.
 
 ## Requirements
+- [Matthiesen Lib API](https://modrinth.com/mod/matthiesen-lib-api)
 - [GooeyLibs v3.1.1-1.21.x+](https://modrinth.com/mod/gooeylibs)
 - [Luckperms 5.4](https://modrinth.com/mod/luckperms)
 
-## Configuration
+## Docs
 
-> **Note:** Only Prefixes are currently supported.
+Documentation for this mod can be found at [mods.matthiesen.dev](https://mods.matthiesen.dev/vanity-plates/)
 
-The configuration file will be located at `./config/vanity_plates/config.json` and by default will contain the following:
+## Version Compatibility
 
-```json
-{
-  "prefixPriority": 1000,
-  "availablePlates": [
-    {
-      "displayItem": "minecraft:paper",
-      "customModelData": null,
-      "label": "Demo",
-      "requiredPermission": "demo.plate",
-      "prefix": "[Demo]"
-    }
-  ]
-}
-```
+| Minecraft Version | Mod Version |
+|-------------------|-------------|
+| 1.21.1            | 1.x.x       |
 
-### LuckPerms setup
+## License
 
-In order for your vanity plates to be displayed, you will need a chat mod that adds luckperms prefixes to the chat, as well
-as to configure your luckperms to include `highest_own` as an available prefix part in the formatting.
-
-In your `./config/luckperms/luckperms.conf` file in the `meta-formatting` section ensure the following:
-
-```conf
-meta-formatting {
-  prefix {
-    format = [
-      "highest_on_track_base",
-      "highest_own" # Add this in the prefix section
-    ]
-  }
-}
-```
-
-## Usage / Commands
-
-To allow users to use any of the configured available prefixes, all you have to do is assign the user/group the `requiredPermission` you assigned in the config.
-
-- `/vanity` - Opens the Vanity Plates GUI (Available to all users)
-- `/plates` - An Alias for `vanity`
-- `/vanity reload` - Reloads the Vanity Plates config (Requires OP)
-- `/plates reload` - an Alias for `vanity reload` 
+MIT - see `LICENSE`.
