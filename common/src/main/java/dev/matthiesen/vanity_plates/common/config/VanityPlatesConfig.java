@@ -1,4 +1,4 @@
-package dev.matthiesen.common.vanity_plates.config;
+package dev.matthiesen.vanity_plates.common.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

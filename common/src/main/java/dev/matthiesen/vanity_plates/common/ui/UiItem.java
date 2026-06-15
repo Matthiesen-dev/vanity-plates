@@ -1,12 +1,12 @@
-package dev.matthiesen.common.vanity_plates.ui;
+package dev.matthiesen.vanity_plates.common.ui;
 
 import ca.landonjw.gooeylibs2.api.UIManager;
 import ca.landonjw.gooeylibs2.api.button.Button;
 import ca.landonjw.gooeylibs2.api.button.GooeyButton;
 import dev.matthiesen.common.matthiesen_lib_api.utility.ItemBuilder;
-import dev.matthiesen.common.vanity_plates.Constants;
-import dev.matthiesen.common.vanity_plates.config.VanityPlatesConfig;
-import dev.matthiesen.common.vanity_plates.util.LPHelper;
+import dev.matthiesen.vanity_plates.common.VanityPlates;
+import dev.matthiesen.vanity_plates.common.config.VanityPlatesConfig;
+import dev.matthiesen.vanity_plates.common.util.LPHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -44,7 +44,7 @@ public final class UiItem {
             text = text.replace('&', '§');
             return Component.literal(text);
         } catch (Exception e) {
-            Constants.createErrorLog("Failed to parse component: " + text, e);
+            VanityPlates.INSTANCE.createErrorLog("Failed to parse component: " + text, e);
             return Component.literal(text);
         }
     }

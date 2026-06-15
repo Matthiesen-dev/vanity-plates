@@ -1,7 +1,6 @@
-package dev.matthiesen.common.vanity_plates.util;
+package dev.matthiesen.vanity_plates.common.util;
 
-import dev.matthiesen.common.vanity_plates.Constants;
-import dev.matthiesen.common.vanity_plates.VanityPlates;
+import dev.matthiesen.vanity_plates.common.VanityPlates;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
@@ -17,16 +16,16 @@ public final class LPHelper {
     private static LuckPerms luckPerms;
 
     private static void xClearPrefix(User user) {
-        user.data().clear(NodeType.PREFIX.predicate(pre -> pre.getPriority() == VanityPlates.getConfig().prefixPriority));
+        user.data().clear(NodeType.PREFIX.predicate(pre -> pre.getPriority() == VanityPlates.INSTANCE.getConfig().prefixPriority));
     }
 
     private static LuckPerms getLuckPerms() {
         if (luckPerms == null) {
             try {
                 luckPerms = LuckPermsProvider.get();
-                Constants.createInfoLog("LuckPerms API loaded successfully");
+                VanityPlates.INSTANCE.createInfoLog("LuckPerms API loaded successfully");
             } catch (IllegalStateException e) {
-                Constants.createErrorLog("LuckPerms not available", e);
+                VanityPlates.INSTANCE.createErrorLog("LuckPerms not available", e);
                 return null;
             }
         }
@@ -41,7 +40,7 @@ public final class LPHelper {
             CompletableFuture<User> asyncUser = userManager.loadUser(playerUUID);
             return asyncUser.join();
         } catch (Exception e) {
-            Constants.createErrorLog("Failed to load LuckPerms user for UUID: " + playerUUID, e);
+            VanityPlates.INSTANCE.createErrorLog("Failed to load LuckPerms user for UUID: " + playerUUID, e);
             return null;
         }
     }
@@ -53,7 +52,7 @@ public final class LPHelper {
             UserManager userManager = lp.getUserManager();
             userManager.saveUser(user);
         } catch (Exception e) {
-            Constants.createErrorLog("Failed to save LuckPerms user: " + user.getUsername(), e);
+            VanityPlates.INSTANCE.createErrorLog("Failed to save LuckPerms user: " + user.getUsername(), e);
         }
     }
 
@@ -66,7 +65,7 @@ public final class LPHelper {
     public static boolean comparePrefix(UUID playerUUID, String prefix) {
         User user = getLPUser(playerUUID);
         if (user == null) return false;
-        PrefixNode node = PrefixNode.builder(prefix, VanityPlates.getConfig().prefixPriority).build();
+        PrefixNode node = PrefixNode.builder(prefix, VanityPlates.INSTANCE.getConfig().prefixPriority).build();
         Collection<PrefixNode> prefixes = user.getNodes(NodeType.PREFIX);
         return prefixes.contains(node);
     }
@@ -74,7 +73,7 @@ public final class LPHelper {
     public static void setUserPrefix(UUID playerUUID, String newPrefix) {
         User user = getLPUser(playerUUID);
         if (user == null) return;
-        PrefixNode node = PrefixNode.builder(newPrefix, VanityPlates.getConfig().prefixPriority).build();
+        PrefixNode node = PrefixNode.builder(newPrefix, VanityPlates.INSTANCE.getConfig().prefixPriority).build();
         xClearPrefix(user);
         user.data().add(node);
         saveUser(user);

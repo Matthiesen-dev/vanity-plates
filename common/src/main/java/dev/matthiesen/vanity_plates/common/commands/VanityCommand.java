@@ -1,11 +1,11 @@
-package dev.matthiesen.common.vanity_plates.commands;
+package dev.matthiesen.vanity_plates.common.commands;
 
 import ca.landonjw.gooeylibs2.api.UIManager;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import dev.matthiesen.common.matthiesen_lib_api.command.AbstractCommand;
-import dev.matthiesen.common.vanity_plates.VanityPlates;
-import dev.matthiesen.common.vanity_plates.ui.PlateMenu;
+import dev.matthiesen.vanity_plates.common.VanityPlates;
+import dev.matthiesen.vanity_plates.common.ui.PlateMenu;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -15,10 +15,10 @@ import java.util.List;
 
 public final class VanityCommand extends AbstractCommand {
     public static final VanityCommand CMD = new VanityCommand();
-    private final List<String> aliases = List.of("vanity", "plates");
 
     @Override
     public void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext registry, Commands.CommandSelection context) {
+        var aliases = List.of("vanity", "plates");
         for (String alias : aliases) {
             dispatcher.register(
                     Commands.literal(alias)
@@ -46,7 +46,7 @@ public final class VanityCommand extends AbstractCommand {
     }
 
     private int reload(CommandContext<CommandSourceStack> context) {
-        VanityPlates.reload();
+        VanityPlates.INSTANCE.reload();
         return 1;
     }
 }

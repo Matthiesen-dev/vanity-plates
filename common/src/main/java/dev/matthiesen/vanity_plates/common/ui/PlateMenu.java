@@ -1,4 +1,4 @@
-package dev.matthiesen.common.vanity_plates.ui;
+package dev.matthiesen.vanity_plates.common.ui;
 
 import ca.landonjw.gooeylibs2.api.UIManager;
 import ca.landonjw.gooeylibs2.api.button.Button;
@@ -12,12 +12,12 @@ import ca.landonjw.gooeylibs2.api.page.Page;
 import ca.landonjw.gooeylibs2.api.template.slot.TemplateSlotDelegate;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import dev.matthiesen.common.matthiesen_lib_api.utility.ItemBuilder;
-import dev.matthiesen.common.vanity_plates.VanityPlates;
-import dev.matthiesen.common.vanity_plates.config.VanityPlatesConfig;
-import dev.matthiesen.common.vanity_plates.util.LPHelper;
+import dev.matthiesen.vanity_plates.common.VanityPlates;
+import dev.matthiesen.vanity_plates.common.config.VanityPlatesConfig;
+import dev.matthiesen.vanity_plates.common.util.LPHelper;
 import net.minecraft.ChatFormatting;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -106,7 +106,7 @@ public final class PlateMenu {
 
     public List<Button> getButtons() {
         List<Button> buttonList = new ArrayList<>();
-        var rawPlates = VanityPlates.getConfig().availablePlates;
+        var rawPlates = VanityPlates.INSTANCE.getConfig().availablePlates;
 
         for (VanityPlatesConfig.PlateEntry plate : rawPlates) {
             UiItem entryData = new UiItem(plate);
