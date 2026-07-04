@@ -36,12 +36,8 @@ public final class PlateMenu {
         return VanityPlates.INSTANCE.getUiConfig();
     }
 
-    public VanityPlatesUITweaks.Permissions getPermsConfig() {
-        return VanityPlates.INSTANCE.getUiConfig().permissions;
-    }
-
     public Component getDisplayTitle() {
-        return Component.literal(getUiConfig().displayTitle)
+        return Component.literal(getUiConfig().text.displayTitle)
                 .withStyle(style ->
                         style.withColor(getUiConfig().colors.title.toMcFormatting())
                                 .withBold(true)
@@ -68,7 +64,7 @@ public final class PlateMenu {
         return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.clearItemId))
                 .hideAdditional()
                 .setCustomName(
-                        Component.literal("Clear Prefix")
+                        Component.literal(getUiConfig().text.clearPrefix)
                                 .withStyle(getUiConfig().colors.clearItem.toMcFormatting())
                 )
                 .build();
@@ -78,7 +74,7 @@ public final class PlateMenu {
         return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.exitItemId))
                 .hideAdditional()
                 .setCustomName(
-                        Component.literal("Exit")
+                        Component.literal(getUiConfig().text.exit)
                                 .withStyle(getUiConfig().colors.exitItem.toMcFormatting())
                 )
                 .build();
@@ -93,8 +89,11 @@ public final class PlateMenu {
 
     public ItemStack getPageItem(int currentPage, int pageLength) {
         return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.pageItemId))
-                .setCustomName(
-                        Component.literal("Page " + currentPage + "/" + pageLength).withStyle(getUiConfig().colors.pageItem.toMcFormatting())
+                .setCustomName(Component.literal(
+                        getUiConfig().text.pageIndicator
+                                .replace("%current%", Integer.toString(currentPage))
+                                .replace("%length%", Integer.toString(pageLength))
+                        ).withStyle(getUiConfig().colors.pageItem.toMcFormatting())
                 )
                 .build();
     }
@@ -191,12 +190,12 @@ public final class PlateMenu {
         List<Button> buttons = getButtons();
 
         LinkedPageButton previous = LinkedPageButton.builder()
-                .display(getNavItem("Previous Page"))
+                .display(getNavItem(getUiConfig().text.previousPage))
                 .linkType(LinkType.Previous)
                 .build();
 
         LinkedPageButton next = LinkedPageButton.builder()
-                .display(getNavItem("Next Page"))
+                .display(getNavItem(getUiConfig().text.nextPage))
                 .linkType(LinkType.Next)
                 .build();
 
@@ -212,7 +211,7 @@ public final class PlateMenu {
             template = template.set(44, getBackButton());
         }
 
-        if (hasPermission(getPermsConfig().clearPrefixUiButton)) {
+        if (hasPermission(getUiConfig().permissions.clearPrefixUiButton)) {
             template = template.set(47, getClearButton());
         }
 

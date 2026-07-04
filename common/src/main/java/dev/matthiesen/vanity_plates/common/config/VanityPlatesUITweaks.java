@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import dev.matthiesen.vanity_plates.common.util.Color;
 
 public final class VanityPlatesUITweaks {
-    @SerializedName("displayTitle")
-    public String displayTitle = "Vanity Plates";
+    @SerializedName("text")
+    public Text text = new Text();
 
     @SerializedName("displayItems")
     public DisplayItems displayItems = new DisplayItems();
@@ -20,6 +20,26 @@ public final class VanityPlatesUITweaks {
 
     @SerializedName("permissions")
     public Permissions permissions = new Permissions();
+
+    public static class Text {
+        @SerializedName("displayTitle")
+        public String displayTitle = "Vanity Plates";
+
+        @SerializedName("clearPrefix")
+        public String clearPrefix = "Clear Prefix";
+
+        @SerializedName("exit")
+        public String exit = "Exit";
+
+        @SerializedName("previousPage")
+        public String previousPage = "Previous Page";
+
+        @SerializedName("nextPage")
+        public String nextPage = "Next Page";
+
+        @SerializedName("pageIndicator")
+        public String pageIndicator = "Page %current%/%length%";
+    }
 
     public static class DisplayItems {
         @SerializedName("frameItemId")
