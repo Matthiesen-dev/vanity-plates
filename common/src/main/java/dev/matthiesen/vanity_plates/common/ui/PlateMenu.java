@@ -191,12 +191,12 @@ public final class PlateMenu {
         List<Button> buttons = getButtons();
 
         LinkedPageButton previous = LinkedPageButton.builder()
-                .display(getNavItem("Previous"))
+                .display(getNavItem("Previous Page"))
                 .linkType(LinkType.Previous)
                 .build();
 
         LinkedPageButton next = LinkedPageButton.builder()
-                .display(getNavItem("Next"))
+                .display(getNavItem("Next Page"))
                 .linkType(LinkType.Next)
                 .build();
 
