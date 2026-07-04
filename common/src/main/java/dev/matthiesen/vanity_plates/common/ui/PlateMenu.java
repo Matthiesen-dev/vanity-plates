@@ -12,14 +12,15 @@ import ca.landonjw.gooeylibs2.api.page.Page;
 import ca.landonjw.gooeylibs2.api.template.slot.TemplateSlotDelegate;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import dev.matthiesen.common.matthiesen_lib_api.utility.ItemBuilder;
+import dev.matthiesen.common.matthiesen_lib_api.utility.RunSlashCommand;
 import dev.matthiesen.vanity_plates.common.VanityPlates;
 import dev.matthiesen.vanity_plates.common.config.VanityPlatesConfig;
+import dev.matthiesen.vanity_plates.common.config.VanityPlatesUITweaks;
+import dev.matthiesen.vanity_plates.common.util.Decoder;
 import dev.matthiesen.vanity_plates.common.util.LPHelper;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,48 +32,68 @@ public final class PlateMenu {
         this.player = player;
     }
 
+    public VanityPlatesUITweaks getUiConfig() {
+        return VanityPlates.INSTANCE.getUiConfig();
+    }
+
     public Component getDisplayTitle() {
-        return Component.literal("Vanity Plates")
+        return Component.literal(getUiConfig().text.displayTitle)
                 .withStyle(style ->
-                        style.withColor(ChatFormatting.GOLD)
+                        style.withColor(getUiConfig().colors.title.toMcFormatting())
                                 .withBold(true)
                 );
     }
 
     public ItemStack getFrameItem() {
-        return new ItemBuilder(Items.GRAY_STAINED_GLASS_PANE)
+        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.frameItemId))
                 .setCustomName(Component.literal(" "))
                 .build();
     }
 
     public ItemStack getNavItem(String label) {
-        return new ItemBuilder(Items.ARROW)
+        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.navigationItemId))
                 .hideAdditional()
                 .setCustomName(
                         Component.literal(label)
-                                .withStyle(
-                                        style -> style.withColor(ChatFormatting.AQUA)
-                                )
+                                .withStyle(getUiConfig().colors.navigationItem.toMcFormatting())
                 )
                 .build();
     }
 
     public ItemStack getClearItem() {
-        return new ItemBuilder(Items.NAME_TAG)
+        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.clearItemId))
                 .hideAdditional()
                 .setCustomName(
-                        Component.literal("Clear Prefix")
-                                .withStyle(
-                                        style -> style.withColor(ChatFormatting.RED)
-                                )
+                        Component.literal(getUiConfig().text.clearPrefix)
+                                .withStyle(getUiConfig().colors.clearItem.toMcFormatting())
                 )
                 .build();
     }
 
-    public ItemStack getPageItem(int currentPage, int pageLength) {
-        return new ItemBuilder(Items.BOOK)
+    public ItemStack getExitItem() {
+        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.exitItemId))
+                .hideAdditional()
                 .setCustomName(
-                        Component.literal("Page " + currentPage + "/" + pageLength).withStyle(style -> style.withColor(ChatFormatting.GOLD))
+                        Component.literal(getUiConfig().text.exit)
+                                .withStyle(getUiConfig().colors.exitItem.toMcFormatting())
+                )
+                .build();
+    }
+
+    private Button getExitButton() {
+        return GooeyButton.builder()
+                .display(getExitItem())
+                .onClick(action -> UIManager.closeUI(player))
+                .build();
+    }
+
+    public ItemStack getPageItem(int currentPage, int pageLength) {
+        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.pageItemId))
+                .setCustomName(Component.literal(
+                        getUiConfig().text.pageIndicator
+                                .replace("%current%", Integer.toString(currentPage))
+                                .replace("%length%", Integer.toString(pageLength))
+                        ).withStyle(getUiConfig().colors.pageItem.toMcFormatting())
                 )
                 .build();
     }
@@ -136,30 +157,67 @@ public final class PlateMenu {
                 .build();
     }
 
+    public boolean hasPermission(String node) {
+        if (node.isEmpty()) return true;
+        return LPHelper.hasPermissionNode(player.getUUID(), node);
+    }
+
+    public Button getBackButton() {
+        ItemStack displayItem = new ItemBuilder(Decoder.decode(getUiConfig().backButton.itemId))
+                .hideAdditional()
+                .setCustomName(
+                        Component.literal(getUiConfig().backButton.label)
+                                .withStyle(getUiConfig().backButton.textColor.toMcFormatting())
+                )
+                .build();
+
+        return GooeyButton.builder()
+                .display(displayItem)
+                .onClick(action -> {
+                    UIManager.closeUI(player);
+                    var server = VanityPlates.INSTANCE.getMinecraftServer();
+                    if (server == null) return;
+                    RunSlashCommand.asServer(server, getUiConfig().backButton.command
+                            .replace("%player%", player.getName().getString())
+                            .replace("%uuid%", player.getUUID().toString())
+                    );
+                })
+                .build();
+    }
+
     public Page getPage() {
         PlaceholderButton placeholder = new PlaceholderButton();
         List<Button> buttons = getButtons();
 
         LinkedPageButton previous = LinkedPageButton.builder()
-                .display(getNavItem("Previous"))
+                .display(getNavItem(getUiConfig().text.previousPage))
                 .linkType(LinkType.Previous)
                 .build();
 
         LinkedPageButton next = LinkedPageButton.builder()
-                .display(getNavItem("Next"))
+                .display(getNavItem(getUiConfig().text.nextPage))
                 .linkType(LinkType.Next)
                 .build();
 
-        ChestTemplate template = ChestTemplate.builder(6)
+        ChestTemplate.Builder template = ChestTemplate.builder(6)
                 .rectangle(0, 0, 5, 9, placeholder)
                 .set(45, previous)
-                .set(47, getClearButton())
                 .set(49, getInfoButton(1, 1))
                 .set(53, next)
-                .fill(getFrameButton())
-                .build();
+                .set(54, getExitButton())
+                .fill(getFrameButton());
 
-        LinkedPage page = PaginationHelper.createPagesFromPlaceholders(template, buttons, null);
+        if (getUiConfig().backButton.enabled) {
+            template = template.set(44, getBackButton());
+        }
+
+        if (hasPermission(getUiConfig().permissions.clearPrefixUiButton)) {
+            template = template.set(47, getClearButton());
+        }
+
+        ChestTemplate builtTemplate = template.build();
+
+        LinkedPage page = PaginationHelper.createPagesFromPlaceholders(builtTemplate, buttons, null);
         setPageTitleRecursive(page);
 
         return page;
