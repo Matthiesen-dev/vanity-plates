@@ -6,9 +6,9 @@ import dev.matthiesen.libs.faststats.Token;
 import dev.matthiesen.vanity_plates.common.commands.VanityCommand;
 import dev.matthiesen.vanity_plates.common.config.VanityPlatesConfig;
 import dev.matthiesen.vanity_plates.common.config.VanityPlatesUITweaks;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-public class VanityPlates extends AbstractCommonMod {
+public final class VanityPlates extends AbstractCommonMod {
     public static final String MOD_ID = "vanity_plates";
     private static final String MOD_NAME = "Vanity Plates";
     private static @Token final String METRICS_TOKEN = "15f018eba784241058551101acde151d";
@@ -34,7 +34,7 @@ public class VanityPlates extends AbstractCommonMod {
     }
 
     @Override
-    public @Nullable @Token String getMetricsToken() {
+    public @Token @NotNull String getMetricsToken() {
         return METRICS_TOKEN;
     }
 

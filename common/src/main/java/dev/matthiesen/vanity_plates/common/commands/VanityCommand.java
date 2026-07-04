@@ -46,7 +46,7 @@ public final class VanityCommand extends AbstractCommand {
     }
 
     private int reload(CommandContext<CommandSourceStack> context) {
-        VanityPlates.INSTANCE.reload();
+        VanityPlates.INSTANCE.reload().run();
         return 1;
     }
 }

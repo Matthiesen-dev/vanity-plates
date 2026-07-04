@@ -175,7 +175,7 @@ public final class PlateMenu {
                 .display(displayItem)
                 .onClick(action -> {
                     UIManager.closeUI(player);
-                    var server = VanityPlates.getMinecraftServer();
+                    var server = VanityPlates.INSTANCE.getMinecraftServer();
                     if (server == null) return;
                     RunSlashCommand.asServer(server, getUiConfig().backButton.command
                             .replace("%player%", player.getName().getString())
