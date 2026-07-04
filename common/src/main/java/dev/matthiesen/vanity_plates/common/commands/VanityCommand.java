@@ -9,6 +9,7 @@ import dev.matthiesen.vanity_plates.common.ui.PlateMenu;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.List;

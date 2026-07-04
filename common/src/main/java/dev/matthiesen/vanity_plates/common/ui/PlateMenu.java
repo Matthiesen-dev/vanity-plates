@@ -12,8 +12,10 @@ import ca.landonjw.gooeylibs2.api.page.Page;
 import ca.landonjw.gooeylibs2.api.template.slot.TemplateSlotDelegate;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import dev.matthiesen.common.matthiesen_lib_api.utility.ItemBuilder;
+import dev.matthiesen.common.matthiesen_lib_api.utility.RunSlashCommand;
 import dev.matthiesen.vanity_plates.common.VanityPlates;
 import dev.matthiesen.vanity_plates.common.config.VanityPlatesConfig;
+import dev.matthiesen.vanity_plates.common.config.VanityPlatesUITweaks;
 import dev.matthiesen.vanity_plates.common.util.Decoder;
 import dev.matthiesen.vanity_plates.common.util.LPHelper;
 import net.minecraft.network.chat.Component;
@@ -30,54 +32,54 @@ public final class PlateMenu {
         this.player = player;
     }
 
-    public VanityPlatesConfig.UiConfig getUiConfig() {
-        return VanityPlates.INSTANCE.getConfig().uiConfig;
+    public VanityPlatesUITweaks getUiConfig() {
+        return VanityPlates.INSTANCE.getUiConfig();
     }
 
-    public VanityPlatesConfig.Permissions getPermsConfig() {
-        return VanityPlates.INSTANCE.getConfig().permissions;
+    public VanityPlatesUITweaks.Permissions getPermsConfig() {
+        return VanityPlates.INSTANCE.getUiConfig().permissions;
     }
 
     public Component getDisplayTitle() {
         return Component.literal(getUiConfig().displayTitle)
                 .withStyle(style ->
-                        style.withColor(getUiConfig().titleColor.toMcFormatting())
+                        style.withColor(getUiConfig().colors.title.toMcFormatting())
                                 .withBold(true)
                 );
     }
 
     public ItemStack getFrameItem() {
-        return new ItemBuilder(Decoder.decode(getUiConfig().frameItemId))
+        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.frameItemId))
                 .setCustomName(Component.literal(" "))
                 .build();
     }
 
     public ItemStack getNavItem(String label) {
-        return new ItemBuilder(Decoder.decode(getUiConfig().navigationItemId))
+        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.navigationItemId))
                 .hideAdditional()
                 .setCustomName(
                         Component.literal(label)
-                                .withStyle(getUiConfig().navigationItemTextColor.toMcFormatting())
+                                .withStyle(getUiConfig().colors.navigationItem.toMcFormatting())
                 )
                 .build();
     }
 
     public ItemStack getClearItem() {
-        return new ItemBuilder(Decoder.decode(getUiConfig().clearItemId))
+        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.clearItemId))
                 .hideAdditional()
                 .setCustomName(
                         Component.literal("Clear Prefix")
-                                .withStyle(getUiConfig().clearItemTextColor.toMcFormatting())
+                                .withStyle(getUiConfig().colors.clearItem.toMcFormatting())
                 )
                 .build();
     }
 
     public ItemStack getExitItem() {
-        return new ItemBuilder(Decoder.decode(getUiConfig().exitItemId))
+        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.exitItemId))
                 .hideAdditional()
                 .setCustomName(
                         Component.literal("Exit")
-                                .withStyle(getUiConfig().exitItemTextColor.toMcFormatting())
+                                .withStyle(getUiConfig().colors.exitItem.toMcFormatting())
                 )
                 .build();
     }
@@ -90,9 +92,9 @@ public final class PlateMenu {
     }
 
     public ItemStack getPageItem(int currentPage, int pageLength) {
-        return new ItemBuilder(Decoder.decode(getUiConfig().pageItemId))
+        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.pageItemId))
                 .setCustomName(
-                        Component.literal("Page " + currentPage + "/" + pageLength).withStyle(getUiConfig().pageItemTextColor.toMcFormatting())
+                        Component.literal("Page " + currentPage + "/" + pageLength).withStyle(getUiConfig().colors.pageItem.toMcFormatting())
                 )
                 .build();
     }
@@ -161,6 +163,29 @@ public final class PlateMenu {
         return LPHelper.hasPermissionNode(player.getUUID(), node);
     }
 
+    public Button getBackButton() {
+        ItemStack displayItem = new ItemBuilder(Decoder.decode(getUiConfig().backButton.itemId))
+                .hideAdditional()
+                .setCustomName(
+                        Component.literal(getUiConfig().backButton.label)
+                                .withStyle(getUiConfig().backButton.textColor.toMcFormatting())
+                )
+                .build();
+
+        return GooeyButton.builder()
+                .display(displayItem)
+                .onClick(action -> {
+                    UIManager.closeUI(player);
+                    var server = VanityPlates.getMinecraftServer();
+                    if (server == null) return;
+                    RunSlashCommand.asServer(server, getUiConfig().backButton.command
+                            .replace("%player%", player.getName().getString())
+                            .replace("%uuid%", player.getUUID().toString())
+                    );
+                })
+                .build();
+    }
+
     public Page getPage() {
         PlaceholderButton placeholder = new PlaceholderButton();
         List<Button> buttons = getButtons();
@@ -183,11 +208,11 @@ public final class PlateMenu {
                 .set(54, getExitButton())
                 .fill(getFrameButton());
 
-//        if (hasBackButton) {
-//            template = template.set(44, getBackButton());
-//        }
+        if (getUiConfig().backButton.enabled) {
+            template = template.set(44, getBackButton());
+        }
 
-        if (hasPermission(getPermsConfig().clearPrefix)) {
+        if (hasPermission(getPermsConfig().clearPrefixUiButton)) {
             template = template.set(47, getClearButton());
         }
 

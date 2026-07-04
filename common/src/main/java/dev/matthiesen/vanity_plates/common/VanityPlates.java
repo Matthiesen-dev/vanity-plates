@@ -5,6 +5,7 @@ import dev.matthiesen.common.matthiesen_lib_api.config.ConfigManager;
 import dev.matthiesen.libs.faststats.Token;
 import dev.matthiesen.vanity_plates.common.commands.VanityCommand;
 import dev.matthiesen.vanity_plates.common.config.VanityPlatesConfig;
+import dev.matthiesen.vanity_plates.common.config.VanityPlatesUITweaks;
 import org.jetbrains.annotations.Nullable;
 
 public class VanityPlates extends AbstractCommonMod {
@@ -14,6 +15,8 @@ public class VanityPlates extends AbstractCommonMod {
 
     private final ConfigManager<VanityPlatesConfig> CONFIG_MANAGER =
             createConfigManager(VanityPlatesConfig.class, "config");
+    private final ConfigManager<VanityPlatesUITweaks> UI_CONFIG_MANAGER =
+            createConfigManager(VanityPlatesUITweaks.class, "ui");
 
     public static final VanityPlates INSTANCE = new VanityPlates();
 
@@ -39,11 +42,16 @@ public class VanityPlates extends AbstractCommonMod {
     public Runnable reload() {
         return () -> {
             CONFIG_MANAGER.loadConfig();
+            UI_CONFIG_MANAGER.loadConfig();
             createInfoLog("Reloaded Config");
         };
     }
 
     public VanityPlatesConfig getConfig() {
         return CONFIG_MANAGER.getConfig();
+    }
+
+    public VanityPlatesUITweaks getUiConfig() {
+        return UI_CONFIG_MANAGER.getConfig();
     }
 }
