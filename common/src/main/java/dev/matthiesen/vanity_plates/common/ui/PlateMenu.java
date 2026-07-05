@@ -50,8 +50,9 @@ public final class PlateMenu {
                 .build();
     }
 
-    public ItemStack getNavItem(String label) {
-        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.navigationItemId))
+    public ItemStack getNavItem(String label, boolean prev) {
+        var item = prev ? getUiConfig().displayItems.prevNavigationItemId : getUiConfig().displayItems.nextNavigationItemId;
+        return new ItemBuilder(Decoder.decode(item))
                 .hideAdditional()
                 .setCustomName(
                         Component.literal(label)
@@ -190,29 +191,29 @@ public final class PlateMenu {
         List<Button> buttons = getButtons();
 
         LinkedPageButton previous = LinkedPageButton.builder()
-                .display(getNavItem(getUiConfig().text.previousPage))
+                .display(getNavItem(getUiConfig().text.previousPage, true))
                 .linkType(LinkType.Previous)
                 .build();
 
         LinkedPageButton next = LinkedPageButton.builder()
-                .display(getNavItem(getUiConfig().text.nextPage))
+                .display(getNavItem(getUiConfig().text.nextPage, false))
                 .linkType(LinkType.Next)
                 .build();
 
         ChestTemplate.Builder template = ChestTemplate.builder(6)
                 .rectangle(0, 0, 5, 9, placeholder)
-                .set(45, previous)
+                .set(46, previous)
                 .set(49, getInfoButton(1, 1))
-                .set(53, next)
-                .set(54, getExitButton())
+                .set(52, next)
+                .set(53, getExitButton())
                 .fill(getFrameButton());
 
         if (getUiConfig().backButton.enabled) {
-            template = template.set(44, getBackButton());
+            template = template.set(45, getBackButton());
         }
 
         if (hasPermission(getUiConfig().permissions.clearPrefixUiButton)) {
-            template = template.set(47, getClearButton());
+            template = template.set(48, getClearButton());
         }
 
         ChestTemplate builtTemplate = template.build();

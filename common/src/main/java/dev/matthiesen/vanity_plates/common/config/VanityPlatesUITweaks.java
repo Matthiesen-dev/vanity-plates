@@ -45,8 +45,11 @@ public final class VanityPlatesUITweaks {
         @SerializedName("frameItemId")
         public String frameItemId = "minecraft:gray_stained_glass_pane";
 
-        @SerializedName("navigationItemId")
-        public String navigationItemId = "minecraft:arrow";
+        @SerializedName("prevNavigationItemId")
+        public String prevNavigationItemId = "minecraft:arrow";
+
+        @SerializedName("nextNavigationItemId")
+        public String nextNavigationItemId = "minecraft:arrow";
 
         @SerializedName("clearItemId")
         public String clearItemId = "minecraft:name_tag";
