@@ -3,7 +3,7 @@ package dev.matthiesen.vanity_plates.common.commands;
 import ca.landonjw.gooeylibs2.api.UIManager;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-import dev.matthiesen.common.matthiesen_lib_api.command.AbstractCommand;
+import dev.matthiesen.matthiesen_core.common.api.command.CoreCommand;
 import dev.matthiesen.vanity_plates.common.VanityPlates;
 import dev.matthiesen.vanity_plates.common.ui.PlateMenu;
 import net.minecraft.commands.CommandBuildContext;
@@ -13,7 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 
 import java.util.List;
 
-public final class VanityCommand extends AbstractCommand {
+public final class VanityCommand implements CoreCommand {
     public static final VanityCommand CMD = new VanityCommand();
 
     @Override
@@ -36,7 +36,6 @@ public final class VanityCommand extends AbstractCommand {
         return source.getPlayer() != null && source.getPlayer().hasPermissions(4);
     }
 
-    @Override
     public int action(CommandContext<CommandSourceStack> context) {
         ServerPlayer player = context.getSource().getPlayer();
         if (player != null) {

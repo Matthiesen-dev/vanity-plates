@@ -1,7 +1,7 @@
 # Vanity Plates
 
 <div>
-  <img src="https://mods.matthiesen.dev/badges/matthiesenLibAPI.svg" alt="Matthiesen Lib API">
+  <img src="https://mods.matthiesen.dev/badges/matthiesenCore.svg" alt="Matthiesen Core">
   <img src="https://mods.matthiesen.dev/badges/gooeylibs.svg" alt="GooeyLibs">
   <img src="https://mods.matthiesen.dev/badges/luckperms.svg" alt="Luckperms">
 </div>
@@ -12,7 +12,8 @@ Simply configure your user-assignable prefixes in the configuration file, and as
 permission node via LuckPerms, and the user can now Set that as a personal prefix.
 
 ## Requirements
-- [Matthiesen Lib API](https://modrinth.com/mod/matthiesen-lib-api)
+
+- [Matthiesen Core](https://modrinth.com/mod/matthiesen-core)
 - [GooeyLibs v3.1.1-1.21.x+](https://modrinth.com/mod/gooeylibs)
 - [Luckperms 5.4](https://modrinth.com/mod/luckperms)
 
@@ -34,7 +35,7 @@ how this mod is being used and improve it over time. You can learn more about th
 
 You can also view the data collected by this mod on the [FastStats: Vanity Plates](https://faststats.dev/project/vanity-plates) page.
 
-To opt out of this data collection, set the `enabled` property to `false` in the `<game_directory>/config/matthiesen_lib_api/metrics.properties` file.
+To opt out of this data collection, set the `enabled` property to `false` in the `<game_directory>/config/matthiesen_core/metrics.properties` file.
 
 ## License
 

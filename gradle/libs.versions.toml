@@ -8,8 +8,7 @@ fabric-loader = "0.17.2"
 fabric-api = "0.116.6+1.21.1"
 neoforge = "21.1.182"
 publish = "0.35.0"
-matthiesen_lib = "1.10.4"
-sponge-mixin = "0.8.5"
+matthiesen_core = "1.0.0-beta.12"
 luckperms = "5.4"
 luckperms-fabric = "6h9SnsZu" # v5.4.150 Fabric (https://modrinth.com/plugin/luckperms/version/v5.4.150-fabric)
 luckperms-neoforge = "dKAPoPGd" # v5.4.150 NeoForge (https://modrinth.com/plugin/luckperms/version/v5.4.150-neoforge)
@@ -32,10 +31,9 @@ minecraft-net = { group = "net.minecraft", name = "minecraft", version.ref = "mi
 fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version.ref = "fabric-loader" }
 fabric-api = { group = "net.fabricmc.fabric-api", name = "fabric-api", version.ref = "fabric-api" }
 neoforge = { group = "net.neoforged", name = "neoforge", version.ref = "neoforge" }
-matthiesen-lib-api-common = { group = "dev.matthiesen", name = "matthiesen-lib-api-common", version.ref = "matthiesen_lib" }
-matthiesen-lib-api-fabric = { group = "dev.matthiesen", name = "matthiesen-lib-api-fabric", version.ref = "matthiesen_lib" }
-matthiesen-lib-api-neoforge = { group = "dev.matthiesen", name = "matthiesen-lib-api-neoforge", version.ref = "matthiesen_lib" }
-sponge-mixin = { group = "org.spongepowered", name = "mixin", version.ref = "sponge-mixin" }
+matthiesen-core-common = { group = "dev.matthiesen", name = "matthiesen-core-common", version.ref = "matthiesen_core" }
+matthiesen-core-fabric = { group = "dev.matthiesen", name = "matthiesen-core-fabric", version.ref = "matthiesen_core" }
+matthiesen-core-neoforge = { group = "dev.matthiesen", name = "matthiesen-core-neoforge", version.ref = "matthiesen_core" }
 fabric-permission-api = { group = "me.lucko", name = "fabric-permissions-api", version.ref = "fabric_permission_api" }
 luckperms-api = { group = "net.luckperms", name = "api", version.ref = "luckperms" }
 luckperms-fabric = { group = "maven.modrinth", name = "luckperms", version.ref = "luckperms-fabric" }
@@ -47,12 +45,12 @@ gooeylibs-neoforge = { group = "ca.landonjw.gooeylibs", name = "neoforge", versi
 [bundles]
 commonCompileOnly = ["luckperms-api"]
 commonModImplementation = ["gooeylibs-api"]
-commonModImplementationNoTransitive = ["matthiesen-lib-api-common"]
+commonModImplementationNoTransitive = ["matthiesen-core-common"]
 
 fabricModImplementation = ["fabric-loader", "fabric-api", "fabric-permission-api"]
-fabricModImplementationNoTransitive = ["matthiesen-lib-api-fabric"]
+fabricModImplementationNoTransitive = ["matthiesen-core-fabric"]
 fabricModRuntimeOnly = ["gooeylibs-fabric", "luckperms-fabric"]
 
 neoforgeModImplementation = []
-neoforgeModImplementationNoTransitive = ["matthiesen-lib-api-neoforge"]
+neoforgeModImplementationNoTransitive = ["matthiesen-core-neoforge"]
 neoforgeModRuntimeOnly = ["gooeylibs-neoforge", "luckperms-neoforge"]

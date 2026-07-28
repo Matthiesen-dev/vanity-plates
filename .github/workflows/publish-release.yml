@@ -9,7 +9,7 @@ on:
     types: [ published ]
 
 # The dependencies below correspond to:
-# - Matthiesen Lib API (j2JrSWnx)
+# - Matthiesen Core (sqEZOmQo)
 # - GooeyLibs (KzjvlKEN)
 # - LuckPerms (Vebnzrzj)
 
@@ -32,7 +32,7 @@ jobs:
       modrinth_id: "Zt3Uy01h"
       modrinth_dependencies: |-
         [
-          {"project_id":"j2JrSWnx","dependency_type":"required"},
+          {"project_id":"sqEZOmQo","dependency_type":"required"},
           {"project_id":"KzjvlKEN","dependency_type":"required"},
           {"project_id":"Vebnzrzj","dependency_type":"required"}
         ]

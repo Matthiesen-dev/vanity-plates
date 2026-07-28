@@ -1,7 +1,5 @@
 package dev.matthiesen.vanity_plates.common.config;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import dev.matthiesen.vanity_plates.common.util.Color;
 
@@ -99,10 +97,4 @@ public final class VanityPlatesUITweaks {
         @SerializedName("command")
         public String command = "gui open example-main %player%"; // Available placeholders: %player% - gets player's name, %uuid% get's player's UUID
     }
-
-    @SuppressWarnings("unused")
-    public static final Gson GSON = new GsonBuilder()
-            .disableHtmlEscaping()
-            .setPrettyPrinting()
-            .create();
 }

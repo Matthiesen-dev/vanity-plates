@@ -1,8 +1,9 @@
 package dev.matthiesen.vanity_plates.common;
 
-import dev.matthiesen.common.matthiesen_lib_api.abstracts.AbstractCommonMod;
-import dev.matthiesen.common.matthiesen_lib_api.config.ConfigManager;
 import dev.matthiesen.libs.faststats.Token;
+import dev.matthiesen.matthiesen_core.common.AbstractCommonMod;
+import dev.matthiesen.matthiesen_core.common.api.events.PlatformEvents;
+import dev.matthiesen.matthiesen_core.common.utility.config.ConfigManager;
 import dev.matthiesen.vanity_plates.common.commands.VanityCommand;
 import dev.matthiesen.vanity_plates.common.config.VanityPlatesConfig;
 import dev.matthiesen.vanity_plates.common.config.VanityPlatesUITweaks;
@@ -29,7 +30,10 @@ public final class VanityPlates extends AbstractCommonMod {
         super.initialize();
         reload().run();
 
-        registerCommand(VanityCommand.CMD);
+        getCommandsRegistryManager().registerCommand(VanityCommand.CMD);
+
+        PlatformEvents.SERVER_RELOAD.subscribe(event -> reload().run());
+
         createInfoLog("Initialized");
     }
 
@@ -38,7 +42,6 @@ public final class VanityPlates extends AbstractCommonMod {
         return METRICS_TOKEN;
     }
 
-    @Override
     public Runnable reload() {
         return () -> {
             CONFIG_MANAGER.loadConfig();

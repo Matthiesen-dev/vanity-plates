@@ -11,8 +11,8 @@ import ca.landonjw.gooeylibs2.api.page.LinkedPage;
 import ca.landonjw.gooeylibs2.api.page.Page;
 import ca.landonjw.gooeylibs2.api.template.slot.TemplateSlotDelegate;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
-import dev.matthiesen.common.matthiesen_lib_api.utility.ItemBuilder;
-import dev.matthiesen.common.matthiesen_lib_api.utility.RunSlashCommand;
+import dev.matthiesen.matthiesen_core.common.utility.commands.RunSlashCommand;
+import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import dev.matthiesen.vanity_plates.common.VanityPlates;
 import dev.matthiesen.vanity_plates.common.config.VanityPlatesConfig;
 import dev.matthiesen.vanity_plates.common.config.VanityPlatesUITweaks;
@@ -176,9 +176,7 @@ public final class PlateMenu {
                 .display(displayItem)
                 .onClick(action -> {
                     UIManager.closeUI(player);
-                    var server = VanityPlates.INSTANCE.getMinecraftServer();
-                    if (server == null) return;
-                    RunSlashCommand.asServer(server, getUiConfig().backButton.command
+                    RunSlashCommand.asServer(getUiConfig().backButton.command
                             .replace("%player%", player.getName().getString())
                             .replace("%uuid%", player.getUUID().toString())
                     );

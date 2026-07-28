@@ -1,6 +1,6 @@
 package dev.matthiesen.vanity_plates.common.util;
 
-import dev.matthiesen.common.matthiesen_lib_api.utility.ItemDecoder;
+import dev.matthiesen.matthiesen_core.common.utility.item.ItemDecoder;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
