@@ -23,6 +23,6 @@
   },
   "depends": {
     "minecraft": "1.21.1",
-    "matthiesen_core": ">=1.0.0-beta.12 <2.0.0"
+    "matthiesen_core": ">=1.0.0-beta.13 <2.0.0"
   }
 }
