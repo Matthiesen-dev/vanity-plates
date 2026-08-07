@@ -8,12 +8,13 @@ fabric-loader = "0.17.2"
 fabric-api = "0.116.6+1.21.1"
 neoforge = "21.1.182"
 publish = "0.35.0"
-matthiesen_core = "1.0.0-beta.13"
+matthiesen_core = "1.0.0-beta.38"
 luckperms = "5.4"
 luckperms-fabric = "6h9SnsZu" # v5.4.150 Fabric (https://modrinth.com/plugin/luckperms/version/v5.4.150-fabric)
 luckperms-neoforge = "dKAPoPGd" # v5.4.150 NeoForge (https://modrinth.com/plugin/luckperms/version/v5.4.150-neoforge)
 gooeylibs = "3.1.1-1.21.x"
 fabric_permission_api = "0.3.1"
+forge-config-api-port = "21.1.6"
 
 [plugins]
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
@@ -41,15 +42,17 @@ luckperms-neoforge = { group = "maven.modrinth", name = "luckperms", version.ref
 gooeylibs-api = { group = "ca.landonjw.gooeylibs", name = "api", version.ref = "gooeylibs" }
 gooeylibs-fabric = { group = "ca.landonjw.gooeylibs", name = "fabric", version.ref = "gooeylibs" }
 gooeylibs-neoforge = { group = "ca.landonjw.gooeylibs", name = "neoforge", version.ref = "gooeylibs" }
+forge-config-api-port-common = { group = "fuzs.forgeconfigapiport", name = "forgeconfigapiport-common-neoforgeapi", version.ref = "forge-config-api-port" }
+forge-config-api-port-fabric = { group = "fuzs.forgeconfigapiport", name = "forgeconfigapiport-fabric", version.ref = "forge-config-api-port" }
 
 [bundles]
-commonCompileOnly = ["luckperms-api"]
+commonCompileOnly = ["luckperms-api", "forge-config-api-port-common"]
 commonModImplementation = ["gooeylibs-api"]
 commonModImplementationNoTransitive = ["matthiesen-core-common"]
 
 fabricModImplementation = ["fabric-loader", "fabric-api", "fabric-permission-api"]
 fabricModImplementationNoTransitive = ["matthiesen-core-fabric"]
-fabricModRuntimeOnly = ["gooeylibs-fabric", "luckperms-fabric"]
+fabricModRuntimeOnly = ["gooeylibs-fabric", "luckperms-fabric", "forge-config-api-port-fabric"]
 
 neoforgeModImplementation = []
 neoforgeModImplementationNoTransitive = ["matthiesen-core-neoforge"]

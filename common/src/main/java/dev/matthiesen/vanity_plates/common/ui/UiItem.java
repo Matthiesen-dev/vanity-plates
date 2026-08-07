@@ -5,7 +5,7 @@ import ca.landonjw.gooeylibs2.api.button.Button;
 import ca.landonjw.gooeylibs2.api.button.GooeyButton;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import dev.matthiesen.vanity_plates.common.VanityPlates;
-import dev.matthiesen.vanity_plates.common.config.VanityPlatesConfig;
+import dev.matthiesen.vanity_plates.common.config.def.PlateEntry;
 import dev.matthiesen.vanity_plates.common.util.LPHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
@@ -27,7 +27,7 @@ public final class UiItem {
     public String prefix;
     public @Nullable Integer customModelData;
 
-    public UiItem(VanityPlatesConfig.PlateEntry entry) {
+    public UiItem(PlateEntry entry) {
         rawDisplayItem = entry.displayItem;
         requiredPermission = entry.requiredPermission;
         label = entry.label;

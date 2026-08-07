@@ -13,9 +13,8 @@ import ca.landonjw.gooeylibs2.api.template.slot.TemplateSlotDelegate;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import dev.matthiesen.matthiesen_core.common.utility.commands.RunSlashCommand;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
-import dev.matthiesen.vanity_plates.common.VanityPlates;
-import dev.matthiesen.vanity_plates.common.config.VanityPlatesConfig;
-import dev.matthiesen.vanity_plates.common.config.VanityPlatesUITweaks;
+import dev.matthiesen.vanity_plates.common.config.def.PlateEntry;
+import dev.matthiesen.vanity_plates.common.config.VPConfig;
 import dev.matthiesen.vanity_plates.common.util.Decoder;
 import dev.matthiesen.vanity_plates.common.util.LPHelper;
 import net.minecraft.network.chat.Component;
@@ -32,51 +31,47 @@ public final class PlateMenu {
         this.player = player;
     }
 
-    public VanityPlatesUITweaks getUiConfig() {
-        return VanityPlates.INSTANCE.getUiConfig();
-    }
-
     public Component getDisplayTitle() {
-        return Component.literal(getUiConfig().text.displayTitle)
+        return Component.literal(VPConfig.GUI_CONFIG.displayTitle.get())
                 .withStyle(style ->
-                        style.withColor(getUiConfig().colors.title.toMcFormatting())
+                        style.withColor(VPConfig.GUI_CONFIG.titleColor.get().toMcFormatting())
                                 .withBold(true)
                 );
     }
 
     public ItemStack getFrameItem() {
-        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.frameItemId))
+        return new ItemBuilder(Decoder.decode(VPConfig.GUI_CONFIG.frameItemId.get()))
                 .setCustomName(Component.literal(" "))
                 .build();
     }
 
     public ItemStack getNavItem(String label, boolean prev) {
-        var item = prev ? getUiConfig().displayItems.prevNavigationItemId : getUiConfig().displayItems.nextNavigationItemId;
+        var item = prev ? VPConfig.GUI_CONFIG.prevNavigationItemId.get() : VPConfig.GUI_CONFIG.nextNavigationItemId.get();
         return new ItemBuilder(Decoder.decode(item))
                 .hideAdditional()
                 .setCustomName(
                         Component.literal(label)
-                                .withStyle(getUiConfig().colors.navigationItem.toMcFormatting())
+                                .withStyle(VPConfig.GUI_CONFIG.navigationItemColor.get().toMcFormatting())
                 )
                 .build();
     }
 
     public ItemStack getClearItem() {
-        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.clearItemId))
+        return new ItemBuilder(Decoder.decode(VPConfig.GUI_CONFIG.clearItemId.get()))
                 .hideAdditional()
                 .setCustomName(
-                        Component.literal(getUiConfig().text.clearPrefix)
-                                .withStyle(getUiConfig().colors.clearItem.toMcFormatting())
+                        Component.literal(VPConfig.GUI_CONFIG.clearPrefix.get())
+                                .withStyle(VPConfig.GUI_CONFIG.clearItemColor.get().toMcFormatting())
                 )
                 .build();
     }
 
     public ItemStack getExitItem() {
-        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.exitItemId))
+        return new ItemBuilder(Decoder.decode(VPConfig.GUI_CONFIG.exitItemId.get()))
                 .hideAdditional()
                 .setCustomName(
-                        Component.literal(getUiConfig().text.exit)
-                                .withStyle(getUiConfig().colors.exitItem.toMcFormatting())
+                        Component.literal(VPConfig.GUI_CONFIG.exit.get())
+                                .withStyle(VPConfig.GUI_CONFIG.exitItemColor.get().toMcFormatting())
                 )
                 .build();
     }
@@ -89,12 +84,12 @@ public final class PlateMenu {
     }
 
     public ItemStack getPageItem(int currentPage, int pageLength) {
-        return new ItemBuilder(Decoder.decode(getUiConfig().displayItems.pageItemId))
+        return new ItemBuilder(Decoder.decode(VPConfig.GUI_CONFIG.pageItemId.get()))
                 .setCustomName(Component.literal(
-                        getUiConfig().text.pageIndicator
+                        VPConfig.GUI_CONFIG.pageIndicator.get()
                                 .replace("%current%", Integer.toString(currentPage))
                                 .replace("%length%", Integer.toString(pageLength))
-                        ).withStyle(getUiConfig().colors.pageItem.toMcFormatting())
+                        ).withStyle(VPConfig.GUI_CONFIG.pageItemColor.get().toMcFormatting())
                 )
                 .build();
     }
@@ -128,9 +123,9 @@ public final class PlateMenu {
 
     public List<Button> getButtons() {
         List<Button> buttonList = new ArrayList<>();
-        var rawPlates = VanityPlates.INSTANCE.getConfig().availablePlates;
+        var rawPlates = VPConfig.getAvailablePlates();
 
-        for (VanityPlatesConfig.PlateEntry plate : rawPlates) {
+        for (PlateEntry plate : rawPlates) {
             UiItem entryData = new UiItem(plate);
             if (entryData.hasPermission(player)) {
                 Button newButton = entryData.getButton(player);
@@ -164,11 +159,11 @@ public final class PlateMenu {
     }
 
     public Button getBackButton() {
-        ItemStack displayItem = new ItemBuilder(Decoder.decode(getUiConfig().backButton.itemId))
+        ItemStack displayItem = new ItemBuilder(Decoder.decode(VPConfig.GUI_CONFIG.backButton_itemId.get()))
                 .hideAdditional()
                 .setCustomName(
-                        Component.literal(getUiConfig().backButton.label)
-                                .withStyle(getUiConfig().backButton.textColor.toMcFormatting())
+                        Component.literal(VPConfig.GUI_CONFIG.backButton_label.get())
+                                .withStyle(VPConfig.GUI_CONFIG.backButton_color.get().toMcFormatting())
                 )
                 .build();
 
@@ -176,7 +171,7 @@ public final class PlateMenu {
                 .display(displayItem)
                 .onClick(action -> {
                     UIManager.closeUI(player);
-                    RunSlashCommand.asServer(getUiConfig().backButton.command
+                    RunSlashCommand.asServer(VPConfig.GUI_CONFIG.backButton_command.get()
                             .replace("%player%", player.getName().getString())
                             .replace("%uuid%", player.getUUID().toString())
                     );
@@ -189,12 +184,12 @@ public final class PlateMenu {
         List<Button> buttons = getButtons();
 
         LinkedPageButton previous = LinkedPageButton.builder()
-                .display(getNavItem(getUiConfig().text.previousPage, true))
+                .display(getNavItem(VPConfig.GUI_CONFIG.previousPage.get(), true))
                 .linkType(LinkType.Previous)
                 .build();
 
         LinkedPageButton next = LinkedPageButton.builder()
-                .display(getNavItem(getUiConfig().text.nextPage, false))
+                .display(getNavItem(VPConfig.GUI_CONFIG.nextPage.get(), false))
                 .linkType(LinkType.Next)
                 .build();
 
@@ -206,11 +201,11 @@ public final class PlateMenu {
                 .set(53, getExitButton())
                 .fill(getFrameButton());
 
-        if (getUiConfig().backButton.enabled) {
+        if (VPConfig.GUI_CONFIG.backButton_enabled.get()) {
             template = template.set(45, getBackButton());
         }
 
-        if (hasPermission(getUiConfig().permissions.clearPrefixUiButton)) {
+        if (hasPermission(VPConfig.GUI_CONFIG.clearPrefixUiButtonPermission.get())) {
             template = template.set(48, getClearButton());
         }
 
