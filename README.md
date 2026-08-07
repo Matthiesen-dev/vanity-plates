@@ -16,6 +16,8 @@ permission node via LuckPerms, and the user can now Set that as a personal prefi
 - [Matthiesen Core](https://modrinth.com/mod/matthiesen-core)
 - [GooeyLibs v3.1.1-1.21.x+](https://modrinth.com/mod/gooeylibs)
 - [Luckperms 5.4](https://modrinth.com/mod/luckperms)
+- [Fabric API](https://modrinth.com/mod/fabric-api) (Fabric only)
+- [Forge Config API Port](https://modrinth.com/mod/forge-config-api-port) (Fabric only)
 
 ## Docs
 
