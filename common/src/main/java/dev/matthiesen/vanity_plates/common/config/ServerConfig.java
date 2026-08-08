@@ -14,9 +14,11 @@ public final class ServerConfig {
 
     public ServerConfig(ModConfigSpec.Builder builder) {
         builder.comment("Vanity Plates Server Config")
+                .translation("vanity_plates.configuration.server.vanity_plates")
                 .push("vanity_plates");
 
         prefixPriority = builder.comment("Priority of the prefix when displayed in chat.")
+                .translation("vanity_plates.configuration.server.vanity_plates.prefixPriority")
                 .defineInRange("prefixPriority", 1000, Integer.MIN_VALUE, Integer.MAX_VALUE);
         availablePlates = builder.comment(
                         "List of available vanity plates",
@@ -27,6 +29,7 @@ public final class ServerConfig {
                         "- 'prefix': The prefix to display in chat (string)",
                         "- 'customModelData': Optional custom model data for the display item (integer, optional)"
                 )
+                .translation("vanity_plates.configuration.server.vanity_plates.availablePlates")
                 .defineListAllowEmpty(
                         List.of("availablePlates"),
                         ServerConfig::getDefaultPlateEntries,
