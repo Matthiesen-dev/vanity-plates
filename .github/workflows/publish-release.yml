@@ -9,12 +9,14 @@ on:
     types: [ published ]
 
 # The dependencies below correspond to:
-# - Matthiesen Lib API (j2JrSWnx)
+# - Matthiesen Core (sqEZOmQo)
 # - GooeyLibs (KzjvlKEN)
 # - LuckPerms (Vebnzrzj)
 
 ## Fabric Only
 # - Fabric Permissions API (lzVo0Dll)
+# - Fabric API (P7dR8mSH) - Required
+# - ForgeConfigAPI Port (ohNO6lps) - Required
 
 jobs:
   publish:
@@ -32,13 +34,15 @@ jobs:
       modrinth_id: "Zt3Uy01h"
       modrinth_dependencies: |-
         [
-          {"project_id":"j2JrSWnx","dependency_type":"required"},
+          {"project_id":"sqEZOmQo","dependency_type":"required"},
           {"project_id":"KzjvlKEN","dependency_type":"required"},
           {"project_id":"Vebnzrzj","dependency_type":"required"}
         ]
       modrinth_fabric_dependencies: |-
         [
-          {"project_id":"lzVo0Dll","dependency_type":"required"}
+          {"project_id":"lzVo0Dll","dependency_type":"required"},
+          {"project_id":"P7dR8mSH","dependency_type":"required"},
+          {"project_id":"ohNO6lps","dependency_type":"required"}
         ]
       discord_icon_url: "https://raw.githubusercontent.com/Matthiesen-dev/.github/refs/heads/main/logo-transparent.png"
     secrets:

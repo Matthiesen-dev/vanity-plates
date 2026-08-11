@@ -3,9 +3,9 @@ package dev.matthiesen.vanity_plates.common.ui;
 import ca.landonjw.gooeylibs2.api.UIManager;
 import ca.landonjw.gooeylibs2.api.button.Button;
 import ca.landonjw.gooeylibs2.api.button.GooeyButton;
-import dev.matthiesen.common.matthiesen_lib_api.utility.ItemBuilder;
+import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import dev.matthiesen.vanity_plates.common.VanityPlates;
-import dev.matthiesen.vanity_plates.common.config.VanityPlatesConfig;
+import dev.matthiesen.vanity_plates.common.config.def.PlateEntry;
 import dev.matthiesen.vanity_plates.common.util.LPHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
@@ -27,7 +27,7 @@ public final class UiItem {
     public String prefix;
     public @Nullable Integer customModelData;
 
-    public UiItem(VanityPlatesConfig.PlateEntry entry) {
+    public UiItem(PlateEntry entry) {
         rawDisplayItem = entry.displayItem;
         requiredPermission = entry.requiredPermission;
         label = entry.label;
@@ -54,7 +54,7 @@ public final class UiItem {
         Item itemToUse = hopeful.orElse(Items.PAPER);
         ItemBuilder builder = new ItemBuilder(itemToUse).hideAdditional().setCustomName(parseText(label));
         if (customModelData != null) {
-            builder = builder.setModelData(customModelData);
+            builder.setModelData(customModelData);
         }
         Component[] lore = new Component[] {
                 active
@@ -62,9 +62,9 @@ public final class UiItem {
                         : Component.literal("Click to set as your prefix")
                           .withStyle(style -> style.withColor(ChatFormatting.GRAY))
         };
-        builder = builder.addLore(lore);
+        builder.addLore(lore);
         if (active) {
-            builder = builder.modifyStack(stack -> {
+            builder.modifyStack(stack -> {
                 stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
                 return stack;
             });

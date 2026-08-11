@@ -1,22 +1,16 @@
 package dev.matthiesen.vanity_plates.common;
 
-import dev.matthiesen.common.matthiesen_lib_api.abstracts.AbstractCommonMod;
-import dev.matthiesen.common.matthiesen_lib_api.config.ConfigManager;
 import dev.matthiesen.libs.faststats.Token;
+import dev.matthiesen.matthiesen_core.common.AbstractCommonMod;
+import dev.matthiesen.matthiesen_core.common.api.platform.loader.ModConfigType;
 import dev.matthiesen.vanity_plates.common.commands.VanityCommand;
-import dev.matthiesen.vanity_plates.common.config.VanityPlatesConfig;
-import dev.matthiesen.vanity_plates.common.config.VanityPlatesUITweaks;
+import dev.matthiesen.vanity_plates.common.config.VPConfig;
 import org.jetbrains.annotations.NotNull;
 
 public final class VanityPlates extends AbstractCommonMod {
     public static final String MOD_ID = "vanity_plates";
     private static final String MOD_NAME = "Vanity Plates";
     private static @Token final String METRICS_TOKEN = "15f018eba784241058551101acde151d";
-
-    private final ConfigManager<VanityPlatesConfig> CONFIG_MANAGER =
-            createConfigManager(VanityPlatesConfig.class, "config");
-    private final ConfigManager<VanityPlatesUITweaks> UI_CONFIG_MANAGER =
-            createConfigManager(VanityPlatesUITweaks.class, "ui");
 
     public static final VanityPlates INSTANCE = new VanityPlates();
 
@@ -27,31 +21,15 @@ public final class VanityPlates extends AbstractCommonMod {
     @Override
     public void initialize() {
         super.initialize();
-        reload().run();
+        registerModConfig(MOD_ID, ModConfigType.SERVER, VPConfig.SERVER_SPEC, "vanity_plates/server.toml");
+        registerModConfig(MOD_ID, ModConfigType.SERVER, VPConfig.GUI_SPEC, "vanity_plates/gui.toml");
 
-        registerCommand(VanityCommand.CMD);
+        getCommandsRegistryManager().registerCommand(VanityCommand.CMD);
         createInfoLog("Initialized");
     }
 
     @Override
     public @Token @NotNull String getMetricsToken() {
         return METRICS_TOKEN;
-    }
-
-    @Override
-    public Runnable reload() {
-        return () -> {
-            CONFIG_MANAGER.loadConfig();
-            UI_CONFIG_MANAGER.loadConfig();
-            createInfoLog("Reloaded Config");
-        };
-    }
-
-    public VanityPlatesConfig getConfig() {
-        return CONFIG_MANAGER.getConfig();
-    }
-
-    public VanityPlatesUITweaks getUiConfig() {
-        return UI_CONFIG_MANAGER.getConfig();
     }
 }

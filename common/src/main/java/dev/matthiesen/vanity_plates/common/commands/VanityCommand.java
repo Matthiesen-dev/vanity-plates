@@ -3,8 +3,7 @@ package dev.matthiesen.vanity_plates.common.commands;
 import ca.landonjw.gooeylibs2.api.UIManager;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-import dev.matthiesen.common.matthiesen_lib_api.command.AbstractCommand;
-import dev.matthiesen.vanity_plates.common.VanityPlates;
+import dev.matthiesen.matthiesen_core.common.api.command.CoreCommand;
 import dev.matthiesen.vanity_plates.common.ui.PlateMenu;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -13,7 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 
 import java.util.List;
 
-public final class VanityCommand extends AbstractCommand {
+public final class VanityCommand implements CoreCommand {
     public static final VanityCommand CMD = new VanityCommand();
 
     @Override
@@ -23,30 +22,15 @@ public final class VanityCommand extends AbstractCommand {
             dispatcher.register(
                     Commands.literal(alias)
                             .executes(this::action)
-                            .then(
-                                    Commands.literal("reload")
-                                            .requires(this::isOP)
-                                            .executes(this::reload)
-                            )
             );
         }
     }
 
-    private boolean isOP(CommandSourceStack source) {
-        return source.getPlayer() != null && source.getPlayer().hasPermissions(4);
-    }
-
-    @Override
     public int action(CommandContext<CommandSourceStack> context) {
         ServerPlayer player = context.getSource().getPlayer();
         if (player != null) {
             UIManager.openUIForcefully(player, new PlateMenu(player).getPage());
         }
-        return 1;
-    }
-
-    private int reload(CommandContext<CommandSourceStack> context) {
-        VanityPlates.INSTANCE.reload().run();
         return 1;
     }
 }
