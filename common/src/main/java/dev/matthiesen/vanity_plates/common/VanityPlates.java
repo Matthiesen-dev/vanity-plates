@@ -14,6 +14,10 @@ public final class VanityPlates extends AbstractCommonMod {
 
     public static final VanityPlates INSTANCE = new VanityPlates();
 
+    public static String modConfig(String name) {
+        return "vanity_plates/" + name + ".toml";
+    }
+
     public VanityPlates() {
         super(MOD_ID, MOD_NAME);
     }
@@ -21,8 +25,8 @@ public final class VanityPlates extends AbstractCommonMod {
     @Override
     public void initialize() {
         super.initialize();
-        registerModConfig(MOD_ID, ModConfigType.SERVER, VPConfig.SERVER_SPEC, "vanity_plates/server.toml");
-        registerModConfig(MOD_ID, ModConfigType.SERVER, VPConfig.GUI_SPEC, "vanity_plates/gui.toml");
+        registerModConfig(MOD_ID, ModConfigType.SERVER, VPConfig.SERVER_SPEC, modConfig("server"));
+        registerModConfig(MOD_ID, ModConfigType.SERVER, VPConfig.GUI_SPEC, modConfig("gui"));
 
         getCommandsRegistryManager().registerCommand(VanityCommand.CMD);
         createInfoLog("Initialized");
