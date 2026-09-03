@@ -13,19 +13,25 @@ import ca.landonjw.gooeylibs2.api.template.slot.TemplateSlotDelegate;
 import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
 import dev.matthiesen.matthiesen_core.common.utility.commands.RunSlashCommand;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
+import dev.matthiesen.matthiesen_core.common.utility.item.ItemDecoder;
 import dev.matthiesen.vanity_plates.common.config.def.PlateEntry;
 import dev.matthiesen.vanity_plates.common.config.VPConfig;
-import dev.matthiesen.vanity_plates.common.util.Decoder;
 import dev.matthiesen.vanity_plates.common.util.LPHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class PlateMenu {
     public ServerPlayer player;
+
+    public static Item decode(String string) {
+        return ItemDecoder.stringToItem(string, Items.BARRIER);
+    }
 
     public PlateMenu(ServerPlayer player) {
         this.player = player;
@@ -40,14 +46,14 @@ public final class PlateMenu {
     }
 
     public ItemStack getFrameItem() {
-        return new ItemBuilder(Decoder.decode(VPConfig.GUI_CONFIG.frameItemId.get()))
+        return new ItemBuilder(decode(VPConfig.GUI_CONFIG.frameItemId.get()))
                 .setCustomName(Component.literal(" "))
                 .build();
     }
 
     public ItemStack getNavItem(String label, boolean prev) {
         var item = prev ? VPConfig.GUI_CONFIG.prevNavigationItemId.get() : VPConfig.GUI_CONFIG.nextNavigationItemId.get();
-        return new ItemBuilder(Decoder.decode(item))
+        return new ItemBuilder(decode(item))
                 .hideAdditional()
                 .setCustomName(
                         Component.literal(label)
@@ -57,7 +63,7 @@ public final class PlateMenu {
     }
 
     public ItemStack getClearItem() {
-        return new ItemBuilder(Decoder.decode(VPConfig.GUI_CONFIG.clearItemId.get()))
+        return new ItemBuilder(decode(VPConfig.GUI_CONFIG.clearItemId.get()))
                 .hideAdditional()
                 .setCustomName(
                         Component.literal(VPConfig.GUI_CONFIG.clearPrefix.get())
@@ -67,7 +73,7 @@ public final class PlateMenu {
     }
 
     public ItemStack getExitItem() {
-        return new ItemBuilder(Decoder.decode(VPConfig.GUI_CONFIG.exitItemId.get()))
+        return new ItemBuilder(decode(VPConfig.GUI_CONFIG.exitItemId.get()))
                 .hideAdditional()
                 .setCustomName(
                         Component.literal(VPConfig.GUI_CONFIG.exit.get())
@@ -84,7 +90,7 @@ public final class PlateMenu {
     }
 
     public ItemStack getPageItem(int currentPage, int pageLength) {
-        return new ItemBuilder(Decoder.decode(VPConfig.GUI_CONFIG.pageItemId.get()))
+        return new ItemBuilder(decode(VPConfig.GUI_CONFIG.pageItemId.get()))
                 .setCustomName(Component.literal(
                         VPConfig.GUI_CONFIG.pageIndicator.get()
                                 .replace("%current%", Integer.toString(currentPage))
@@ -159,7 +165,7 @@ public final class PlateMenu {
     }
 
     public Button getBackButton() {
-        ItemStack displayItem = new ItemBuilder(Decoder.decode(VPConfig.GUI_CONFIG.backButton_itemId.get()))
+        ItemStack displayItem = new ItemBuilder(decode(VPConfig.GUI_CONFIG.backButton_itemId.get()))
                 .hideAdditional()
                 .setCustomName(
                         Component.literal(VPConfig.GUI_CONFIG.backButton_label.get())
