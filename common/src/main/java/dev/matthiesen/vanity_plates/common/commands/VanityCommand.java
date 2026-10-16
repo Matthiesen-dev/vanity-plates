@@ -1,9 +1,9 @@
 package dev.matthiesen.vanity_plates.common.commands;
 
-import ca.landonjw.gooeylibs2.api.UIManager;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import dev.matthiesen.matthiesen_core.common.api.command.CoreCommand;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
 import dev.matthiesen.vanity_plates.common.ui.PlateMenu;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -29,7 +29,7 @@ public final class VanityCommand implements CoreCommand {
     public int action(CommandContext<CommandSourceStack> context) {
         ServerPlayer player = context.getSource().getPlayer();
         if (player != null) {
-            UIManager.openUIForcefully(player, new PlateMenu(player).getPage());
+            ServerUIManager.openUIForcefully(player, new PlateMenu(player).getPage());
         }
         return 1;
     }

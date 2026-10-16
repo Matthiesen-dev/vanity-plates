@@ -1,8 +1,8 @@
 package dev.matthiesen.vanity_plates.common.ui;
 
-import ca.landonjw.gooeylibs2.api.UIManager;
-import ca.landonjw.gooeylibs2.api.button.Button;
-import ca.landonjw.gooeylibs2.api.button.GooeyButton;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.Button;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.ServerButton;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import dev.matthiesen.vanity_plates.common.VanityPlates;
 import dev.matthiesen.vanity_plates.common.config.def.PlateEntry;
@@ -84,12 +84,12 @@ public final class UiItem {
         if (!isActive(player)) {
             LPHelper.setUserPrefix(player.getUUID(), prefix);
         }
-        UIManager.closeUI(player);
-        UIManager.openUIForcefully(player, new PlateMenu(player).getPage());
+        ServerUIManager.closeUI(player);
+        ServerUIManager.openUIForcefully(player, new PlateMenu(player).getPage());
     }
 
     public Button getButton(ServerPlayer player) {
-        return GooeyButton.builder()
+        return ServerButton.builder()
                 .display(getDisplayItem(isActive(player)))
                 .onClick(action -> onClickAction(player))
                 .build();

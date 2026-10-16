@@ -10,7 +10,6 @@ on:
 
 # The dependencies below correspond to:
 # - Matthiesen Core (sqEZOmQo)
-# - GooeyLibs (KzjvlKEN)
 # - LuckPerms (Vebnzrzj)
 
 ## Fabric Only
@@ -35,7 +34,6 @@ jobs:
       modrinth_dependencies: |-
         [
           {"project_id":"sqEZOmQo","dependency_type":"required"},
-          {"project_id":"KzjvlKEN","dependency_type":"required"},
           {"project_id":"Vebnzrzj","dependency_type":"required"}
         ]
       modrinth_fabric_dependencies: |-
