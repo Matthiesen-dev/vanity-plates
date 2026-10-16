@@ -1,16 +1,12 @@
 package dev.matthiesen.vanity_plates.common.ui;
 
-import ca.landonjw.gooeylibs2.api.UIManager;
-import ca.landonjw.gooeylibs2.api.button.Button;
-import ca.landonjw.gooeylibs2.api.button.GooeyButton;
-import ca.landonjw.gooeylibs2.api.button.PlaceholderButton;
-import ca.landonjw.gooeylibs2.api.button.linked.LinkType;
-import ca.landonjw.gooeylibs2.api.button.linked.LinkedPageButton;
-import ca.landonjw.gooeylibs2.api.helpers.PaginationHelper;
-import ca.landonjw.gooeylibs2.api.page.LinkedPage;
-import ca.landonjw.gooeylibs2.api.page.Page;
-import ca.landonjw.gooeylibs2.api.template.slot.TemplateSlotDelegate;
-import ca.landonjw.gooeylibs2.api.template.types.ChestTemplate;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.ServerUIManager;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.*;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.button.linked.*;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.helpers.PaginationHelper;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.page.*;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.template.slot.TemplateSlotDelegate;
+import dev.matthiesen.matthiesen_core.common.api.server_menu.template.types.ChestTemplate;
 import dev.matthiesen.matthiesen_core.common.utility.commands.RunSlashCommand;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemBuilder;
 import dev.matthiesen.matthiesen_core.common.utility.item.ItemDecoder;
@@ -83,9 +79,9 @@ public final class PlateMenu {
     }
 
     private Button getExitButton() {
-        return GooeyButton.builder()
+        return ServerButton.builder()
                 .display(getExitItem())
-                .onClick(action -> UIManager.closeUI(player))
+                .onClick(action -> ServerUIManager.closeUI(player))
                 .build();
     }
 
@@ -101,7 +97,7 @@ public final class PlateMenu {
     }
 
     private Button getInfoButton(int currentPage, int pageLength) {
-        return GooeyButton.builder()
+        return ServerButton.builder()
                 .display(getPageItem(currentPage, pageLength))
                 .build();
     }
@@ -143,18 +139,18 @@ public final class PlateMenu {
     }
 
     public Button getClearButton() {
-        return GooeyButton.builder()
+        return ServerButton.builder()
                 .display(getClearItem())
                 .onClick(action -> {
                     LPHelper.clearUserPrefix(player.getUUID());
-                    UIManager.closeUI(player);
-                    UIManager.openUIForcefully(player, getPage());
+                    ServerUIManager.closeUI(player);
+                    ServerUIManager.openUIForcefully(player, getPage());
                 })
                 .build();
     }
 
     public Button getFrameButton() {
-        return GooeyButton.builder()
+        return ServerButton.builder()
                 .display(getFrameItem())
                 .build();
     }
@@ -173,10 +169,10 @@ public final class PlateMenu {
                 )
                 .build();
 
-        return GooeyButton.builder()
+        return ServerButton.builder()
                 .display(displayItem)
                 .onClick(action -> {
-                    UIManager.closeUI(player);
+                    ServerUIManager.closeUI(player);
                     RunSlashCommand.asServer(VPConfig.GUI_CONFIG.backButton_command.get()
                             .replace("%player%", player.getName().getString())
                             .replace("%uuid%", player.getUUID().toString())
