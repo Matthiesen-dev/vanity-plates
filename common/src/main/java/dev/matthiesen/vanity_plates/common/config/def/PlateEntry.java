@@ -30,7 +30,12 @@ public final class PlateEntry {
         String label = config.get("label");
         String requiredPermission = config.get("requiredPermission");
         String prefix = config.get("prefix");
-        @Nullable Integer customModelData = config.getIntOrElse("customModelData", null);
+        Integer customModelData = null;
+        try {
+            customModelData = config.getInt("customModelData");
+        } catch (Exception e) {
+            // Ignore, customModelData is optional
+        }
         return new PlateEntry(displayItem, label, requiredPermission, prefix, customModelData);
     }
 
