@@ -1,6 +1,6 @@
 package dev.matthiesen.vanity_plates.common;
 
-import dev.matthiesen.libs.faststats.Token;
+import dev.faststats.Token;
 import dev.matthiesen.matthiesen_core.common.AbstractCommonMod;
 import dev.matthiesen.matthiesen_core.common.api.platform.loader.ModConfigType;
 import dev.matthiesen.vanity_plates.common.commands.VanityCommand;
@@ -14,10 +14,6 @@ public final class VanityPlates extends AbstractCommonMod {
 
     public static final VanityPlates INSTANCE = new VanityPlates();
 
-    public static String modConfig(String name) {
-        return "vanity_plates/" + name + ".toml";
-    }
-
     public VanityPlates() {
         super(MOD_ID, MOD_NAME);
     }
@@ -25,8 +21,8 @@ public final class VanityPlates extends AbstractCommonMod {
     @Override
     public void initialize() {
         super.initialize();
-        registerModConfig(MOD_ID, ModConfigType.SERVER, VPConfig.SERVER_SPEC, modConfig("server"));
-        registerModConfig(MOD_ID, ModConfigType.SERVER, VPConfig.GUI_SPEC, modConfig("gui"));
+        registerModConfig(MOD_ID, ModConfigType.SERVER, VPConfig.SERVER_SPEC, modConfigPath("server"));
+        registerModConfig(MOD_ID, ModConfigType.SERVER, VPConfig.GUI_SPEC, modConfigPath("gui"));
 
         getCommandsRegistryManager().registerCommand(VanityCommand.CMD);
         createInfoLog("Initialized");

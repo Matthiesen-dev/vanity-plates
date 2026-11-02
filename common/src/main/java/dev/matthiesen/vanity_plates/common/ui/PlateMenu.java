@@ -36,7 +36,7 @@ public final class PlateMenu {
     public Component getDisplayTitle() {
         return Component.literal(VPConfig.GUI_CONFIG.displayTitle.get())
                 .withStyle(style ->
-                        style.withColor(VPConfig.GUI_CONFIG.titleColor.get().toMcFormatting())
+                        style.withColor(VPConfig.GUI_CONFIG.titleColor.get().getFormat())
                                 .withBold(true)
                 );
     }
@@ -53,7 +53,7 @@ public final class PlateMenu {
                 .hideAdditional()
                 .setCustomName(
                         Component.literal(label)
-                                .withStyle(VPConfig.GUI_CONFIG.navigationItemColor.get().toMcFormatting())
+                                .withStyle(VPConfig.GUI_CONFIG.navigationItemColor.get().getFormat())
                 )
                 .build();
     }
@@ -63,7 +63,7 @@ public final class PlateMenu {
                 .hideAdditional()
                 .setCustomName(
                         Component.literal(VPConfig.GUI_CONFIG.clearPrefix.get())
-                                .withStyle(VPConfig.GUI_CONFIG.clearItemColor.get().toMcFormatting())
+                                .withStyle(VPConfig.GUI_CONFIG.clearItemColor.get().getFormat())
                 )
                 .build();
     }
@@ -73,7 +73,7 @@ public final class PlateMenu {
                 .hideAdditional()
                 .setCustomName(
                         Component.literal(VPConfig.GUI_CONFIG.exit.get())
-                                .withStyle(VPConfig.GUI_CONFIG.exitItemColor.get().toMcFormatting())
+                                .withStyle(VPConfig.GUI_CONFIG.exitItemColor.get().getFormat())
                 )
                 .build();
     }
@@ -91,7 +91,7 @@ public final class PlateMenu {
                         VPConfig.GUI_CONFIG.pageIndicator.get()
                                 .replace("%current%", Integer.toString(currentPage))
                                 .replace("%length%", Integer.toString(pageLength))
-                        ).withStyle(VPConfig.GUI_CONFIG.pageItemColor.get().toMcFormatting())
+                        ).withStyle(VPConfig.GUI_CONFIG.pageItemColor.get().getFormat())
                 )
                 .build();
     }
@@ -165,7 +165,7 @@ public final class PlateMenu {
                 .hideAdditional()
                 .setCustomName(
                         Component.literal(VPConfig.GUI_CONFIG.backButton_label.get())
-                                .withStyle(VPConfig.GUI_CONFIG.backButton_color.get().toMcFormatting())
+                                .withStyle(VPConfig.GUI_CONFIG.backButton_color.get().getFormat())
                 )
                 .build();
 
