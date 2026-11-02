@@ -1,6 +1,6 @@
 package dev.matthiesen.vanity_plates.common.config;
 
-import dev.matthiesen.vanity_plates.common.util.Color;
+import dev.matthiesen.matthiesen_core.common.utility.chat.ChatColors;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public final class GUIServerConfig {
@@ -22,17 +22,17 @@ public final class GUIServerConfig {
     public ModConfigSpec.ConfigValue<String> exitItemId;
 
     // UI Colors
-    public ModConfigSpec.EnumValue<Color> titleColor;
-    public ModConfigSpec.EnumValue<Color> navigationItemColor;
-    public ModConfigSpec.EnumValue<Color> clearItemColor;
-    public ModConfigSpec.EnumValue<Color> pageItemColor;
-    public ModConfigSpec.EnumValue<Color> exitItemColor;
+    public ModConfigSpec.EnumValue<ChatColors> titleColor;
+    public ModConfigSpec.EnumValue<ChatColors> navigationItemColor;
+    public ModConfigSpec.EnumValue<ChatColors> clearItemColor;
+    public ModConfigSpec.EnumValue<ChatColors> pageItemColor;
+    public ModConfigSpec.EnumValue<ChatColors> exitItemColor;
 
     // UI Optional Back button
     public ModConfigSpec.BooleanValue backButton_enabled;
     public ModConfigSpec.ConfigValue<String> backButton_itemId;
     public ModConfigSpec.ConfigValue<String> backButton_label;
-    public ModConfigSpec.EnumValue<Color> backButton_color;
+    public ModConfigSpec.EnumValue<ChatColors> backButton_color;
     public ModConfigSpec.ConfigValue<String> backButton_command;
 
     // UI Permissions
@@ -94,19 +94,19 @@ public final class GUIServerConfig {
                 .push("colors");
         titleColor = builder.comment("Color for the GUI title")
                 .translation("vanity_plates.configuration.server.gui.colors.titleColor")
-                .defineEnum("titleColor", Color.GOLD);
+                .defineEnum("titleColor", ChatColors.GOLD);
         navigationItemColor = builder.comment("Color for the navigation items")
                 .translation("vanity_plates.configuration.server.gui.colors.navigationItemColor")
-                .defineEnum("navigationItemColor", Color.AQUA);
+                .defineEnum("navigationItemColor", ChatColors.AQUA);
         clearItemColor = builder.comment("Color for the 'Clear Prefix' button")
                 .translation("vanity_plates.configuration.server.gui.colors.clearItemColor")
-                .defineEnum("clearItemColor", Color.RED);
+                .defineEnum("clearItemColor", ChatColors.RED);
         pageItemColor = builder.comment("Color for the page indicator")
                 .translation("vanity_plates.configuration.server.gui.colors.pageItemColor")
-                .defineEnum("pageItemColor", Color.GOLD);
+                .defineEnum("pageItemColor", ChatColors.GOLD);
         exitItemColor = builder.comment("Color for the 'Exit' button")
                 .translation("vanity_plates.configuration.server.gui.colors.exitItemColor")
-                .defineEnum("exitItemColor", Color.RED);
+                .defineEnum("exitItemColor", ChatColors.RED);
         builder.pop(); // Closes "gui.colors"
 
         builder.comment("GUI Back button Configuration")
@@ -123,7 +123,7 @@ public final class GUIServerConfig {
                 .define("label", "Back to Previous Menu");
         backButton_color = builder.comment("Color for the back button")
                 .translation("vanity_plates.configuration.server.gui.backButton.color")
-                .defineEnum("color", Color.RED);
+                .defineEnum("color", ChatColors.RED);
         backButton_command = builder.comment("Command to execute when the back button is pressed")
                 .translation("vanity_plates.configuration.server.gui.backButton.command")
                 .define("command", "gui open example-main %player%");
